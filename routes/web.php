@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeLandingController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +42,7 @@ Route::group([
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboardPage'])->name('dashboard');
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+        Route::resource('data-admin', AdminController::class);
     });
 });
