@@ -34,11 +34,22 @@
 
     <!-- Custom styles for this template -->
     <link href="/asset-landing/css/signin.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="text-center">
 
     <main class="form-signin">
+        @if (\Session::has('error'))
+        <script type="text/javascript">
+        Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "{!! \Session::get('error') !!}",
+            confirmButtonColor: '#3085d6',
+        });
+        </script>
+        @endif
         <form action="{{ route('admin.proses') }}" method="POST">
             @csrf
             <h1 class="fw-bolder">Admin Log In</h1>

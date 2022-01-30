@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeLandingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\KamarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +46,7 @@ Route::group([
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
         Route::resource('data-admin', AdminController::class);
+        Route::resource('data-user', UserController::class);
+        Route::resource('data-kamar', KamarController::class);
     });
 });

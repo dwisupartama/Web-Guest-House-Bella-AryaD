@@ -8,6 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@yield('title') - Admin Pererenan Nengah Guest House</title>
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
     <link href="/asset-admin/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -64,13 +65,13 @@
                             </div>
                             Data Admin
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.data-user.index')) active disabled @endif" href="{{ route('admin.data-user.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-users"></i>
                             </div>
                             Data User
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.data-kamar.index')) active disabled @endif" href="{{ route('admin.data-kamar.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-bed"></i>
                             </div>
@@ -133,8 +134,10 @@
             </footer>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
+    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> --}}
     <script src="/asset-admin/js/scripts.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -142,6 +145,8 @@
     <script src="/asset-admin/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="/asset-admin/js/datatables-simple-demo.js"></script>
+    @yield('script')
+
 </body>
 
 </html>

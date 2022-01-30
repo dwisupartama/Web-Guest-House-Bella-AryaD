@@ -1,18 +1,18 @@
 @extends('admin/layout/master')
 
-@section('title', 'Data Admin')
+@section('title', 'Data User')
 
 @section('content')
 <div class="alert alert-primary mb-4" role="alert">
-    Data Admin adalah pengelolaan data yang berisikan daftar dari admin yang bertugas untuk mengelola halaman admin dari website.
+    Data User adalah pengelolaan data yang berisikan daftar dari user yang menggunakan website ini untuk melakukan pemesanan.
 </div>
 <div class="card mb-4">
     <div class="card-header">
         <div class="w-auto float-start mt-1 fs-5">
             <i class="fas fa-table me-1"></i>
-            Data Admin
+            Data User
         </div>
-        <a href="{{ route('admin.data-admin.create') }}" class="btn btn-primary float-end">
+        <a href="{{ route('admin.data-user.create') }}" class="btn btn-primary float-end">
             <i class="fas fa-plus"></i>
             Tambah Data
         </a>
@@ -34,9 +34,9 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nama Admin</th>
-                    <th>Username</th>
-                    <th>Alamat Admin</th>
+                    <th>Nama User</th>
+                    <th>Email</th>
+                    <th>Asal Negara</th>
                     <th>No Telp</th>
                     <th>Aksi</th>
                 </tr>
@@ -44,31 +44,31 @@
             <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>Nama Admin</th>
-                    <th>Username</th>
-                    <th>Alamat Admin</th>
+                    <th>Nama User</th>
+                    <th>Email</th>
+                    <th>Asal Negara</th>
                     <th>No Telp</th>
                     <th>Aksi</th>
                 </tr>
             </tfoot>
             <tbody>
-                @foreach ($data_admin as $admin)
+                @foreach ($data_user as $user)
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">{{ $admin->nama_admin }}</td>
-                    <td class="align-middle">{{ $admin->username }}</td>
-                    <td class="align-middle">{{ $admin->alamat_admin }}</td>
-                    <td class="align-middle">{{ $admin->no_telp }}</td>
+                    <td class="align-middle">{{ $user->nama }}</td>
+                    <td class="align-middle">{{ $user->email }}</td>
+                    <td class="align-middle">{{ $user->asal_negara }}</td>
+                    <td class="align-middle">{{ $user->no_telp }}</td>
                     <td class="align-middle">
-                        <a href="{{ route('admin.data-admin.edit', $admin->id) }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('admin.data-user.edit', $user->id) }}" class="btn btn-success btn-sm">
                             <i class="fas fa-edit"></i>
                             Edit
                         </a>
-                        <a href="#" class="btn btn-danger btn-sm btn-delete-data" data-id="{{ $admin->id }}">
+                        <a href="#" class="btn btn-danger btn-sm btn-delete-data" data-id="{{ $user->id }}">
                             <i class="fas fa-trash"></i>
                             Delete
                         </a>
-                        <form id="delete-data-{{ $admin->id }}" action="{{ route('admin.data-admin.destroy', $admin->id) }}" method="POST" class="d-none">
+                        <form id="delete-data-{{ $user->id }}" action="{{ route('admin.data-user.destroy', $user->id) }}" method="POST" class="d-none">
                             @method('DELETE');
                             @csrf
                         </form>

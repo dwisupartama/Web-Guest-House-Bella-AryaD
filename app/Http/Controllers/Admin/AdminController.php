@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\Admin;
 
 class AdminController extends Controller
@@ -94,7 +95,27 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'nama_admin' => 'required|max:50',
+            'username' => 'required|unique:tb_admin,username,'.$id.'|max:255',
+            'alamat_admin' => 'required',
+            'no_telp_admin' => 'required|numeric|digits_between:11,15|unique:tb_admin,no_telp,'.$id,
+        ]);
+
+        if($validated){
+            // return "Berhasil";
+
+            $data_admin = Admin::find($id);
+    
+            $data_admin->nama_admin = $request->nama_admin;
+            $data_admin->username = $request->username;
+            $data_admin->alamat_admin = $request->alamat_admin;
+            $data_admin->no_telp = $request->no_telp_admin;
+
+            $data_admin->save();
+            
+            return redirect()->route('admin.data-admin.index')->with('success', 'Data admin berhasil diperbaharui.');
+        }
     }
 
     /**
@@ -105,6 +126,10 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete_data_admin = Admin::find($id)->delete();
+
+        if($delete_data_admin){
+            return redirect()->route('admin.data-admin.index')->with('success', 'Data berhasil dihapus.');
+        }
     }
 }

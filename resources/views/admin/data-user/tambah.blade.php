@@ -1,32 +1,32 @@
 @extends('admin/layout/master')
 
-@section('title', 'Tambah Data Admin')
+@section('title', 'Tambah Data User')
 
 @section('content')
 <div class="alert alert-primary col-lg-7 mb-4" role="alert">
-    Tambahkan admin baru untuk mendaftarkan akun kepada seseorang yang ingin mengelola admin website.
+    Tambahkan user baru untuk mendaftarkan akun pengguna agar dapat digunakan untuk melakukan transaksi.
 </div>
 <div class="card col-lg-7 mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        Tambah Admin
+        Tambah User
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.data-admin.store') }}" method="POST">
+        <form action="{{ route('admin.data-user.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label class="form-label">Nama Admin</label>
-                <input type="text" class="form-control @error('nama_admin') is-invalid @enderror" value="{{ old('nama_admin') }}" name="nama_admin" placeholder="Masukkan nama admin...">
-                @error('nama_admin')
+                <label class="form-label">Nama User</label>
+                <input type="text" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" name="nama" placeholder="Masukkan nama user...">
+                @error('nama')
                 <span class="invalid-feedback" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </div>
             <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" name="username" placeholder="Masukkan username admin...">
-                @error('username')
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" name="email" placeholder="Masukkan email user...">
+                @error('email')
                 <span class="invalid-feedback" role="alert">
                     {{ $message }}
                 </span>
@@ -47,25 +47,25 @@
                     placeholder="Masukkan konfirmasi password admin...">
             </div>
             <div class="mb-3">
-                <label class="form-label">Alamat Admin</label>
-                <textarea class="form-control @error('alamat_admin') is-invalid @enderror" rows="3" placeholder="Masukan alamat admin..." name="alamat_admin">{{ old('alamat_admin') }}</textarea>
-                @error('alamat_admin')
+                <label class="form-label">Asal Negara</label>
+                <input type="text" class="form-control @error('asal_negara') is-invalid @enderror" value="{{ old('asal_negara') }}" name="asal_negara" placeholder="Masukkan asal negara user...">
+                @error('asal_negara')
                 <span class="invalid-feedback" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </div>
             <div class="mb-3">
-                <label class="form-label">No. Telp Admin</label>
-                <input type="text" class="form-control @error('no_telp_admin') is-invalid @enderror" value="{{ old('no_telp_admin') }}" name="no_telp_admin" placeholder="Masukkan no. telp admin...">
-                @error('no_telp_admin')
+                <label class="form-label">No. Telp</label>
+                <input type="text" class="form-control @error('no_telp') is-invalid @enderror" value="{{ old('no_telp') }}" name="no_telp" placeholder="Masukkan no. telp user...">
+                @error('no_telp')
                 <span class="invalid-feedback" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;&nbsp;Simpan Data</button>
-            <a href="{{ route('admin.data-admin.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('admin.data-user.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </div>

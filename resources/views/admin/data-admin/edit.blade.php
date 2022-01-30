@@ -12,7 +12,7 @@
         Edit Data Admin
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.data-admin.store') }}" method="POST">
+        <form action="{{ route('admin.data-admin.update', $data_admin->id) }}" method="POST">
             @method('PATCH')
             @csrf
             <div class="mb-3">
@@ -51,7 +51,8 @@
                 </span>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;&nbsp;Simpan Data</button>
+            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;&nbsp;Perbaharui Data</button>
+            <a href="{{ route('admin.data-admin.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </div>
