@@ -76,7 +76,7 @@
                     <td class="align-middle">{{ $kamar->no_kamar }}</td>
                     <td class="align-middle">{{ $kamar->tipeKamar->tipe_kamar }}</td>
                     <td class="align-middle">
-                        <a href="#" class="btn btn-secondary btn-sm btn-img-kamar" data-image="{{ asset('storage/img/img-kamar/'.$kamar->gambar_kamar) }}" data-toggle="modal" data-target="#modalShowImageKamar">
+                        <a href="javascript:void(0);" class="btn btn-secondary btn-sm btn-img-kamar" data-image="{{ asset('storage/img/img-kamar/'.$kamar->gambar_kamar) }}">
                             <i class="fas fa-image"></i>
                             Lihat Gambar
                         </a>
@@ -137,7 +137,6 @@
             let data_image = $(this).data('image');
 
             $("#img-kamar").attr('src', data_image);
-
             $("#modal-show-image-kamar").modal('show');
         });
     });

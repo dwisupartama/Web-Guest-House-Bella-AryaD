@@ -12,8 +12,9 @@
     <link href="/asset-admin/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css" integrity="sha512-nwpMzLYxfwDnu68Rt9PqLqgVtHkIJxEPrlu3PfTfLQKVgBAlTKDmim1JvCGNyNRtyvCx1nNIVBfYm8UZotWd4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
 </head>
-
+@yield('style')
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
@@ -52,38 +53,38 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link @if(Route::is('admin.dashboard')) active disabled @endif" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-link @if(Route::is('admin.dashboard')) active @endif" href="{{ route('admin.dashboard') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-tachometer-alt"></i>
                             </div>
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Master Data</div>
-                        <a class="nav-link @if(Route::is('admin.data-admin.index')) active disabled @endif" href="{{ route('admin.data-admin.index') }}">
+                        <a class="nav-link @if(Route::is('admin.data-admin.*')) active @endif" href="{{ route('admin.data-admin.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-user-shield"></i>
                             </div>
                             Data Admin
                         </a>
-                        <a class="nav-link @if(Route::is('admin.data-user.index')) active disabled @endif" href="{{ route('admin.data-user.index') }}">
+                        <a class="nav-link @if(Route::is('admin.data-user.*')) active @endif" href="{{ route('admin.data-user.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-users"></i>
                             </div>
                             Data User
                         </a>
-                        <a class="nav-link @if(Route::is('admin.data-kamar.index')) active disabled @endif" href="{{ route('admin.data-kamar.index') }}">
+                        <a class="nav-link @if(Route::is('admin.data-kamar.*')) active @endif" href="{{ route('admin.data-kamar.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-bed"></i>
                             </div>
                             Data Kamar
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.data-konten.*')) active @endif" href="{{ route('admin.data-konten.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-newspaper"></i>
                             </div>
                             Data Konten
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.data-gambar.*')) active @endif" href="{{ route('admin.data-gambar.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-images"></i>
                             </div>
@@ -134,6 +135,7 @@
             </footer>
         </div>
     </div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
@@ -145,6 +147,9 @@
     <script src="/asset-admin/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="/asset-admin/js/datatables-simple-demo.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js" integrity="sha512-t4CFex/T+ioTF5y0QZnCY9r5fkE8bMf9uoNH2HNSwsiTaMQMO0C9KbKPMvwWNdVaEO51nDL3pAzg4ydjWXaqbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
+    
     @yield('script')
 
 </body>

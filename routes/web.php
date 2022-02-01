@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\KamarController;
+use App\Http\Controllers\Admin\KontenController;
+use App\Http\Controllers\Admin\GambarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +50,7 @@ Route::group([
         Route::resource('data-admin', AdminController::class);
         Route::resource('data-user', UserController::class);
         Route::resource('data-kamar', KamarController::class);
+        Route::resource('data-konten', KontenController::class);
+        Route::resource('data-gambar', GambarController::class);
     });
 });

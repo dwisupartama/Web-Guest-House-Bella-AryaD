@@ -23,6 +23,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "simditor": "^2.3.28",
         "sweetalert2": "^11.3.10"
     }
 }
