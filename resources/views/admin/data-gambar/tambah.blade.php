@@ -26,12 +26,12 @@
                 <label class="form-label">Gambar Konten</label>
                 <div class="input-group mb-3">
                     <input type="file" class="form-control @error('gambar_konten') is-invalid @enderror" id="input-img-gambar" name="gambar_konten" accept="image/*">
-                  </div>
-                @error('gambar_konten')
-                <span class="invalid-feedback" role="alert">
-                    {{ $message }}
-                </span>
-                @enderror
+                    @error('gambar_konten')
+                    <span class="invalid-feedback" role="alert">
+                        {{ $message }}
+                    </span>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3" style="display: none;" id="preview-img-gambar">
                 <div class="col-lg-4">
