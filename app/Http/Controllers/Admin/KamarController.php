@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
 use App\Models\Kamar;
 use App\Models\TipeKamar;
 
@@ -51,6 +52,7 @@ class KamarController extends Controller
             'tipe_kamar' => 'required',
             'gambar_kamar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'harga_kamar' => 'required|numeric',
+            'deskripsi_singkat' => 'required|max:100',
             'deskripsi_kamar' => 'required',
         ]);
         
@@ -59,6 +61,7 @@ class KamarController extends Controller
                 'no_kamar' => $request->no_kamar,
                 'id_tipe_kamar' => $request->tipe_kamar,
                 'harga_kamar' => $request->harga_kamar,
+                'deskripsi_singkat' => $request->deskripsi_singkat,
                 'deskripsi_kamar' => $request->deskripsi_kamar
             ]);
 
@@ -126,6 +129,7 @@ class KamarController extends Controller
             'tipe_kamar' => 'required',
             'gambar_kamar' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'harga_kamar' => 'required|numeric',
+            'deskripsi_singkat' => 'required|max:100',
             'deskripsi_kamar' => 'required',
         ]);
 
@@ -140,6 +144,7 @@ class KamarController extends Controller
                 $data_kamar->id_tipe_kamar = $request->tipe_kamar;
                 $data_kamar->gambar_kamar = $image_name;
                 $data_kamar->harga_kamar = $request->harga_kamar;
+                $data_kamar->deskripsi_singkat = $request->deskripsi_singkat;
                 $data_kamar->deskripsi_kamar = $request->deskripsi_kamar;
 
                 $data_kamar->save();
@@ -151,6 +156,7 @@ class KamarController extends Controller
                 $data_kamar->no_kamar = $request->no_kamar;
                 $data_kamar->id_tipe_kamar = $request->tipe_kamar;
                 $data_kamar->harga_kamar = $request->harga_kamar;
+                $data_kamar->deskripsi_singkat = $request->deskripsi_singkat;
                 $data_kamar->deskripsi_kamar = $request->deskripsi_kamar;
 
                 $data_kamar->save();

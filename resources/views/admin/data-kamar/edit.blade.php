@@ -76,6 +76,15 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label class="form-label">Deskripsi Singkat</label>
+                <textarea class="form-control @error('deskripsi_singkat') is-invalid @enderror" placeholder="Masukan deskripsi singkat kamar..." name="deskripsi_singkat">{{ $data_kamar->deskripsi_singkat }}</textarea>
+                @error('deskripsi_singkat')
+                <span class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </span>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Deskripsi Kamar</label>
                 <textarea class="form-control editor @error('deskripsi_kamar') is-invalid @enderror" placeholder="Masukan deskripsi kamar..." name="deskripsi_kamar">{{ $data_kamar->deskripsi_kamar }}</textarea>
                 @error('deskripsi_kamar')

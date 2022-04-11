@@ -13,6 +13,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css" integrity="sha512-nwpMzLYxfwDnu68Rt9PqLqgVtHkIJxEPrlu3PfTfLQKVgBAlTKDmim1JvCGNyNRtyvCx1nNIVBfYm8UZotWd4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <!-- Custom Style CSS -->
+    <link href="/asset-landing/css/custom.css" rel="stylesheet" />
 </head>
 @yield('style')
 <body class="sb-nav-fixed">
@@ -26,10 +28,13 @@
         <ul class="navbar-nav ms-auto ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i> {{auth()->user("admin")->nama_admin}} </a>
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i> {{auth()->guard('admin')->user()->nama_admin}} </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('admin.profileSetting') }}">
+                            <i class="fas fa-user-edit"></i>&nbsp;&nbsp;Profile Setting
+                        </a>
+                    </li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
@@ -37,7 +42,7 @@
                         {{-- <a class="dropdown-item" href="#!">Logout</a> --}}
                         <a href="{{ route('admin.logout') }}" class="dropdown-item" onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;{{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                             @csrf
@@ -91,7 +96,7 @@
                             Data Gambar Konten
                         </a>
                         <div class="sb-sidenav-menu-heading">Reservasi</div>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.data-reservasi.*')) active @endif" href="{{ route('admin.data-reservasi.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-calendar-check"></i>
                             </div>
@@ -124,12 +129,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
+                        <div class="text-muted">Copyright &copy; Pererenan Nengah Guest House 2022</div>
                     </div>
                 </div>
             </footer>

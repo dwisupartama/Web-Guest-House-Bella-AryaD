@@ -102,7 +102,7 @@
                     $("#delete-data-"+data_id).submit();
                 }
             });
-            });
+        });
     });
 </script>
 @endsection

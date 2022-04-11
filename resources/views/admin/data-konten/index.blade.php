@@ -52,7 +52,7 @@
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
                     <td class="align-middle">{{ $konten->judul_konten }}</td>
-                    <td class="align-middle">{!! $konten->deskripsi_konten !!}</td>
+                    <td class="align-middle">{{ $konten->deskripsi_konten }}</td>
                     {{-- {!! nl2br(e($text)) !!} --}}
                     <td class="align-middle">
                         <a href="{{ route('admin.data-konten.edit', $konten->id) }}" class="btn btn-success btn-sm mb-1 mt-1">

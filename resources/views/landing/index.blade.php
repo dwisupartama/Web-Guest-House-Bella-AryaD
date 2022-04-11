@@ -70,56 +70,36 @@
             </div>
         </div>
         <div class="row gx-5">
-            <div class="col-lg-4 mb-5">
-                <div class="card h-100 shadow border-0">
-                    <img class="card-img-top" src="https://picsum.photos/id/1008/600/350" alt="..." />
-                    <div class="card-body p-4">
-                        <div class="badge bg-primary bg-gradient rounded-pill mb-2">Facilities and Service</div>
-                        <a class="text-decoration-none link-dark" href="#!">
-                            <h5 class="card-title mb-3">Blog post title</h5>
-                        </a>
-                        <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                    
-                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                        <div class="d-flex align-items-end justify-content-between">
-                            <a href="asfsf" class="btn btn-outline-primary">View More</a>
+            @foreach ($data_konten as $konten)
+                @php
+                    $count_gambar = $data_gambar_konten->where('id_konten', $konten->id)->count();
+                @endphp
+                @if($count_gambar > 0)
+                    @php
+                        $rand_gambar = $data_gambar_konten->where('id_konten', $konten->id)->random(1)->first();
+                    @endphp
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <img class="card-img-top" src="{{ asset('storage/img/img-konten/'.$rand_gambar->link_gambar) }}" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ $konten->judul_konten }}</div>
+                                <a class="text-decoration-none link-dark" href="#!">
+                                    <h5 class="card-title mb-3">{{ $rand_gambar->nama_gambar }}</h5>
+                                </a>
+                                <p class="card-text mb-0">
+                                    {{ $konten->deskripsi_konten }}
+                                </p>
+                            </div>
+                            
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <a href="{{ route('landing.content') }}#content-{{ $konten->id }}" class="btn btn-outline-primary">View More</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5">
-                <div class="card h-100 shadow border-0">
-                    <img class="card-img-top" src="https://picsum.photos/id/1071/600/350" alt="..." />
-                    <div class="card-body p-4">
-                        <div class="badge bg-primary bg-gradient rounded-pill mb-2">Accommodation</div>
-                        <a class="text-decoration-none link-dark" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                        <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                    
-                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                        <div class="d-flex align-items-end justify-content-between">
-                            <a href="asfsf" class="btn btn-outline-primary">View More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-5">
-                <div class="card h-100 shadow border-0">
-                    <img class="card-img-top" src="https://picsum.photos/id/1061/600/350" alt="..." />
-                    <div class="card-body p-4">
-                        <div class="badge bg-primary bg-gradient rounded-pill mb-2">Beach</div>
-                        <a class="text-decoration-none link-dark" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                        <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                    
-                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                        <div class="d-flex align-items-end justify-content-between">
-                            <a href="asfsf" class="btn btn-outline-primary">View More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
     </div>
 </section>

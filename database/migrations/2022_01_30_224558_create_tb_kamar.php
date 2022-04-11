@@ -20,6 +20,7 @@ class CreateTbKamar extends Migration
             $table->string('no_kamar',10);
             $table->unsignedBigInteger('id_tipe_kamar');
             $table->bigInteger('harga_kamar');
+            $table->string('deskripsi_singkat', 100);
             $table->text('deskripsi_kamar');
 
             $table->foreign('id_tipe_kamar')->references('id')->on('tb_tipe_kamar');
