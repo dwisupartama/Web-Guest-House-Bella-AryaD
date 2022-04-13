@@ -43,7 +43,7 @@
                             @endforeach
 
                             @if($jumlah_gambar < 1)
-                                <p class="mb-4">Gallery not yet available </p>
+                                <p class="mb-4">Gallery not yet available</p>
                             @endif
                         </div>
                     </div>

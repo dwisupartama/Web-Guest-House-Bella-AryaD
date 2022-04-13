@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card bg-warning text-white mb-4">
+        <div class="card bg-secondary text-white mb-4">
             <div class="card-body">
                 <small>Reservasi Check-in Hari Ini</small>
                 <div class="fs-2 fw-bolder">
@@ -65,6 +65,42 @@
         </div>
     </div>
 </div>
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Data Pembelian Kamar
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple2">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tipe Kamar</th>
+                    <th>No. Kamar</th>
+                    <th>Harga Kamar</th>
+                    <th>Jumlah Pemesanan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data_pembelian_kamar as $pembelian_kamar)
+                    @php
+                        $data = $data_kamar->find($pembelian_kamar->id_kamar);
+                    @endphp
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->tipeKamar->tipe_kamar }}</td>
+                        <td>{{ $data->no_kamar }}</td>
+                        <td>Rp . {{ number_format($data->harga_kamar,0,',','.') }}</td>
+                        <td>{{ $pembelian_kamar->jumlah }} Reservasi</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -131,7 +167,7 @@
                 pointHoverBackgroundColor: "rgba(2,117,216,1)",
                 pointHitRadius: 50,
                 pointBorderWidth: 2,
-                data: [@foreach($data_penghasilan_per_bulan as $penghasilan_per_bulan)@if($loop->iteration == 1){{ $penghasilan_per_bulan->total }}@else,{{ $penghasilan_per_bulan->total }}@endif @endforeach],
+                data: [@foreach($data_penghasilan_per_bulan as $penghasilan_per_bulan){{ $penghasilan_per_bulan->total }},@endforeach],
                 }],
             },
             options: {
