@@ -1,6 +1,6 @@
 @extends('admin/layout/master')
 
-@section('title', 'Tambah Data Gambar')
+@section('title', 'Tambah Data Galeri')
 
 @section('style')
 <style>
@@ -12,12 +12,12 @@
 
 @section('content')
 <div class="alert alert-primary col-lg-7 mb-4" role="alert">
-    Tambahkan gambar baru untuk konten agar lebih banyak artikel yang dapat ditampilkan oleh konten.
+    Tambahkan galeri baru untuk konten agar lebih banyak artikel yang dapat ditampilkan oleh konten.
 </div>
 <div class="card col-lg-7 mb-4">
     <div class="card-header">
         <i class="fas fa-plus me-1"></i>
-        Tambah Gambar
+        Tambah Galeri
     </div>
     <div class="card-body">
         <form action="{{ route('admin.data-gambar.store') }}" enctype="multipart/form-data" method="POST">

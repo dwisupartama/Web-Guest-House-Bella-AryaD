@@ -24,7 +24,7 @@
             <i class="fas fa-calendar me-1"></i>
             Calendar Reservasi
         </div>
-        <a href="#" class="btn btn-primary float-end" id="btn-cetak-laporan">
+        <a href="#" class="btn btn-primary float-end @if($data_reservasi->count() < 1) disabled @endif" id="btn-cetak-laporan">
             <i class="fas fa-print" id="icon-button-print"></i>
             <div class="d-none spinner-border spinner-border-sm text-light" role="status" id="loading-print">
                 <span class="visually-hidden">Loading...</span>

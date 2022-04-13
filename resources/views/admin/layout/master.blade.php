@@ -100,7 +100,7 @@
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-images"></i>
                             </div>
-                            Data Gambar Konten
+                            Data Galeri
                         </a>
                         @endif
                         <div class="sb-sidenav-menu-heading">Reservasi</div>
@@ -151,8 +151,6 @@
     <script src="/asset-admin/js/scripts.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/asset-admin/assets/demo/chart-area-demo.js"></script>
-    <script src="/asset-admin/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="/asset-admin/js/datatables-simple-demo.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js" integrity="sha512-t4CFex/T+ioTF5y0QZnCY9r5fkE8bMf9uoNH2HNSwsiTaMQMO0C9KbKPMvwWNdVaEO51nDL3pAzg4ydjWXaqbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
