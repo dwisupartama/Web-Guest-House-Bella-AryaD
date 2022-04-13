@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\KamarController;
 use App\Http\Controllers\Admin\KontenController;
 use App\Http\Controllers\Admin\GambarController;
 use App\Http\Controllers\Admin\ReservasiController;
+use App\Http\Controllers\Admin\LaporanReservasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,14 +82,24 @@ Route::group([
         Route::post('profile-setting/update', [ProfileSettingController::class, 'update'])->name('profileSetting.update');
         Route::post('profile-setting/reset-password', [ProfileSettingController::class, 'resetPassword'])->name('profileSetting.resetPassword');
 
-        Route::resource('data-admin', AdminController::class);
+        Route::resource('data-admin', AdminController::class)->middleware('hakaksesadmin');
         Route::resource('data-user', UserController::class);
-        Route::resource('data-kamar', KamarController::class);
-        Route::resource('data-konten', KontenController::class);
-        Route::resource('data-gambar', GambarController::class);
+        Route::resource('data-kamar', KamarController::class)->middleware('hakaksesadmin');
+        Route::resource('data-konten', KontenController::class)->middleware('hakaksesadmin');
+        Route::resource('data-gambar', GambarController::class)->middleware('hakaksesadmin');
 
         // Route Reservasi
         Route::get('data-reservasi', [ReservasiController::class, 'index'])->name('data-reservasi.index');
+
+        Route::get('data-reservasi/create', [ReservasiController::class, 'create'])->name('data-reservasi.create');
+        Route::post('data-reservasi/create', [ReservasiController::class, 'search'])->name('data-reservasi.search');
+        Route::get('data-reservasi/form-add-cart/{id}', [ReservasiController::class, 'formAddCart'])->name('data-reservasi.formAddCart');
+        Route::post('data-reservasi/store-cart', [ReservasiController::class, 'storeCart'])->name('data-reservasi.storeCart');
+        Route::delete('data-reservasi/cart/{id}', [ReservasiController::class, 'cartAdminDelete'])->name('data-reservasi.cart.destroy');
+        Route::get('data-reservasi/pilih-user', [ReservasiController::class, 'pilihUser'])->name('data-reservasi.pilihUser');
+        Route::get('data-reservasi/form-reservasi-admin/{id}', [ReservasiController::class, 'formReservasiAdmin'])->name('data-reservasi.formReservasiAdmin');
+        Route::post('data-reservasi/buat-reservasi', [ReservasiController::class, 'buatReservasi'])->name('data-reservasi.buatReservasi');
+
         Route::get('data-reservasi/proses/{id}', [ReservasiController::class, 'proses'])->name('data-reservasi.proses');
         Route::get('data-reservasi/batal/{id}', [ReservasiController::class, 'batal'])->name('data-reservasi.batal');
         Route::get('data-reservasi/telah-dibayarkan/{id}', [ReservasiController::class, 'telahDibayarkan'])->name('data-reservasi.telahDibayarkan');
@@ -97,5 +108,10 @@ Route::group([
         Route::get('data-reservasi/checkout-all/{id}', [ReservasiController::class, 'checkOutAll'])->name('data-reservasi.checkOutAll');
         Route::get('data-reservasi/checkin-room/{id_reservasi}/{id_kamar}', [ReservasiController::class, 'checkInRoom'])->name('data-reservasi.checkInRoom');
         Route::get('data-reservasi/checkout-room/{id_reservasi}/{id_kamar}', [ReservasiController::class, 'checkOutRoom'])->name('data-reservasi.checkOutRoom');
+
+        //Route Laporan Reservasi
+        Route::get('laporan-reservasi', [LaporanReservasiController::class, 'index'])->name('laporan-reservasi.index');
+        Route::get('laporan-reservasi/modal-cetak', [LaporanReservasiController::class, 'modalCetakLaporan'])->name('laporan-reservasi.modalCetakLaporan');
+        Route::post('laporan-reservasi/cetak-laporan', [LaporanReservasiController::class, 'cetakLaporan'])->name('laporan-reservasi.cetakLaporan');
     });
 });

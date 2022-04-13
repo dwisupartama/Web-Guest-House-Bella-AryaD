@@ -41,6 +41,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'nama_admin' => 'required|max:50',
+            'hak_akses' => 'required',
             'username' => 'required|unique:tb_admin|max:255',
             'password' => 'required|confirmed',
             'alamat_admin' => 'required',
@@ -50,6 +51,7 @@ class AdminController extends Controller
         if($validated){
             $tambah_admin = Admin::create([
                 'nama_admin' => $request->nama_admin,
+                'hak_akses' => $request->hak_akses,
                 'username' => $request->username,
                 'password' => bcrypt($request->password),
                 'alamat_admin' => $request->alamat_admin,
@@ -97,6 +99,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'nama_admin' => 'required|max:50',
+            'hak_akses' => 'required',
             'username' => 'required|unique:tb_admin,username,'.$id.'|max:255',
             'alamat_admin' => 'required',
             'no_telp_admin' => 'required|numeric|digits_between:11,15|unique:tb_admin,no_telp,'.$id,
@@ -108,6 +111,7 @@ class AdminController extends Controller
             $data_admin = Admin::find($id);
     
             $data_admin->nama_admin = $request->nama_admin;
+            $data_admin->hak_akses = $request->hak_akses;
             $data_admin->username = $request->username;
             $data_admin->alamat_admin = $request->alamat_admin;
             $data_admin->no_telp = $request->no_telp_admin;

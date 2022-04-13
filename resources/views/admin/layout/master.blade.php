@@ -4,17 +4,21 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    @yield('meta')
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@yield('title') - Admin Pererenan Nengah Guest House</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
     <link href="/asset-admin/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css" integrity="sha512-nwpMzLYxfwDnu68Rt9PqLqgVtHkIJxEPrlu3PfTfLQKVgBAlTKDmim1JvCGNyNRtyvCx1nNIVBfYm8UZotWd4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
     <!-- Custom Style CSS -->
     <link href="/asset-landing/css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 </head>
 @yield('style')
 <body class="sb-nav-fixed">
@@ -65,18 +69,21 @@
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Master Data</div>
+                        @if(auth()->guard('admin')->user()->hak_akses == "Admin")
                         <a class="nav-link @if(Route::is('admin.data-admin.*')) active @endif" href="{{ route('admin.data-admin.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-user-shield"></i>
                             </div>
                             Data Admin
                         </a>
+                        @endif
                         <a class="nav-link @if(Route::is('admin.data-user.*')) active @endif" href="{{ route('admin.data-user.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-users"></i>
                             </div>
                             Data User
                         </a>
+                        @if(auth()->guard('admin')->user()->hak_akses == "Admin")
                         <a class="nav-link @if(Route::is('admin.data-kamar.*')) active @endif" href="{{ route('admin.data-kamar.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-bed"></i>
@@ -95,6 +102,7 @@
                             </div>
                             Data Gambar Konten
                         </a>
+                        @endif
                         <div class="sb-sidenav-menu-heading">Reservasi</div>
                         <a class="nav-link @if(Route::is('admin.data-reservasi.*')) active @endif" href="{{ route('admin.data-reservasi.index') }}">
                             <div class="sb-nav-link-icon">
@@ -102,7 +110,7 @@
                             </div>
                             Data Reservasi
                         </a>
-                        <a class="nav-link" href="">
+                        <a class="nav-link @if(Route::is('admin.laporan-reservasi.*')) active @endif" href="{{ route('admin.laporan-reservasi.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-flag"></i>
                             </div>

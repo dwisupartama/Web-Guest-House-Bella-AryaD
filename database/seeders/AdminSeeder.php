@@ -16,6 +16,7 @@ class AdminSeeder extends Seeder
     {
         Admin::create([
             'nama_admin' => 'Admin',
+            'hak_akses' => 'Admin',
             'username' => 'admin',
             'password' => bcrypt('admin123'),
             'alamat_admin' => 'Rahasia',
@@ -24,6 +25,7 @@ class AdminSeeder extends Seeder
         
         Admin::create([
             'nama_admin' => 'Dwi Supartama',
+            'hak_akses' => 'Karyawan',
             'username' => 'dwisupartama',
             'password' => bcrypt('dwisupartama123'),
             'alamat_admin' => 'Jln. Raya Semat',

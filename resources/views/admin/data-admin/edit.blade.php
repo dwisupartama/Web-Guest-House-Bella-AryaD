@@ -25,6 +25,19 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label class="form-label">Hak Akses</label>
+                <select class="form-select" name="hak_akses" aria-label="Default select example">
+                    <option value="">Pilih Hak Akses</option>
+                    <option value="Admin" @if($data_admin->hak_akses == "Admin") selected @endif>Admin</option>
+                    <option value="Karyawan" @if($data_admin->hak_akses == "Karyawan") selected @endif>Karyawan</option>
+                </select>
+                @error('hak_akses')
+                <span class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </span>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ $data_admin->username }}" name="username" placeholder="Masukkan username admin...">
                 @error('username')

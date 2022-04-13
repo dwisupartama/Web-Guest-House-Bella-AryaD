@@ -305,7 +305,6 @@
         });
 
         $('#process-booking-now').click(function(){
-            // alert("Test");
             $('#form-booking').submit();
         });
     });

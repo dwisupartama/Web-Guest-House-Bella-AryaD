@@ -37,7 +37,7 @@ class BookingController extends Controller
             ->groupBy('tb_kamar.id')
             ->get();
 
-        $data_kamar = Kamar::where('id_tipe_kamar', $request->room_type)->get();
+        $data_kamar = Kamar::where('id_tipe_kamar', $request->room_type)->latest()->get();
         $index = 0;
 
         foreach($data_kamar as $kamar){

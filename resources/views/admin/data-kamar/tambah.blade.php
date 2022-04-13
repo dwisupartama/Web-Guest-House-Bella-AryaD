@@ -39,7 +39,7 @@
                         <option @if(old('tipe_kamar') == $tipe_kamar->id) selected @endif value="{{ $tipe_kamar->id }}">{{ $tipe_kamar->tipe_kamar }}</option>
                     @endforeach
                 </select>
-                @error('username')
+                @error('tipe_kamar')
                 <span class="invalid-feedback" role="alert">
                     {{ $message }}
                 </span>

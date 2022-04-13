@@ -16,6 +16,7 @@ class CreateTableAdmin extends Migration
         Schema::create('tb_admin', function (Blueprint $table) {
             $table->id();
             $table->string('nama_admin', 50);
+            $table->enum('hak_akses', ['Admin', 'Karyawan']);
             $table->string('username')->unique();
             $table->string('password');
             $table->text('alamat_admin');

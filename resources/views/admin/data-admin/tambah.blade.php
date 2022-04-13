@@ -24,6 +24,19 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label class="form-label">Hak Akses</label>
+                <select class="form-select" name="hak_akses" aria-label="Default select example">
+                    <option value="">Pilih Hak Akses</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Karyawan">Karyawan</option>
+                </select>
+                @error('hak_akses')
+                <span class="invalid-feedback" role="alert">
+                    {{ $message }}
+                </span>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" name="username" placeholder="Masukkan username admin...">
                 @error('username')

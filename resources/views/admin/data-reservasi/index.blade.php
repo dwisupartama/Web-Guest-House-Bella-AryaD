@@ -12,7 +12,7 @@
             <i class="fas fa-table me-1"></i>
             Data Reservasi
         </div>
-        <a href="" class="btn btn-primary float-end disabled">
+        <a href="{{ route('admin.data-reservasi.create') }}" class="btn btn-primary float-end">
             <i class="fas fa-plus"></i>
             Tambah Reservasi
         </a>
@@ -33,9 +33,9 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="text-center">#</th>
                     <th>No. Reservasi</th>
-                    <th>Nama</th>
+                    <th>Nama Customer</th>
                     <th>Tanggal Check-in</th>
                     <th>Tanggal Check-out</th>
                     <th>Status Reservasi</th>
@@ -45,12 +45,22 @@
             <tbody>
                 @foreach ($data_reservasi as $reservasi)
                 <tr>
-                    <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">{{ $reservasi->no_reservasi }}</td>
+                    <td class="align-middle text-center">{{ $loop->iteration }}</td>
+                    <td class="align-middle fw-bolder">{{ $reservasi->no_reservasi }}</td>
                     <td class="align-middle">{{ $reservasi->nama_user }}</td>
                     <td class="align-middle">{{ DateHelpers::formatDateLocal($reservasi->tgl_book_check_in) }}</td>
                     <td class="align-middle">{{ DateHelpers::formatDateLocal($reservasi->tgl_book_check_out) }}</td>
-                    <td class="align-middle">{{ $reservasi->status_reservasi }}</td>
+                    <td class="align-middle fw-bolder 
+                    @if($reservasi->status_reservasi == "Menunggu Pembayaran")
+                        text-warning
+                    @elseif($reservasi->status_reservasi == "Siap di Check-in" || $reservasi->status_reservasi == "Sudah Check-in")
+                        text-primary
+                    @elseif($reservasi->status_reservasi == "Sudah Check-out")
+                        text-success
+                    @else
+                        text-danger
+                    @endif
+                    ">{{ $reservasi->status_reservasi }}</td>
                     <td class="align-middle">
                         <a href="{{ route('admin.data-reservasi.proses', [$reservasi->id]) }}" class="btn btn-success btn-sm mb-1 mt-1">
                             <i class="fas fa-pen"></i>&nbsp;&nbsp;Proses

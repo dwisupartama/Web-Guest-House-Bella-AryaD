@@ -35,6 +35,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Admin</th>
+                    <th>Hak Akses</th>
                     <th>Username</th>
                     <th>Alamat Admin</th>
                     <th>No Telp</th>
@@ -45,6 +46,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Admin</th>
+                    <th>Hak Akses</th>
                     <th>Username</th>
                     <th>Alamat Admin</th>
                     <th>No Telp</th>
@@ -56,6 +58,7 @@
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
                     <td class="align-middle">{{ $admin->nama_admin }}</td>
+                    <td class="align-middle">{{ $admin->hak_akses }}</td>
                     <td class="align-middle">{{ $admin->username }}</td>
                     <td class="align-middle">{{ $admin->alamat_admin }}</td>
                     <td class="align-middle">{{ $admin->no_telp }}</td>
