@@ -3,6 +3,12 @@
 
 <head>
     <style>
+        *{
+            
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+        }
+
         #customers {
             width: 100%;
             font-family: 'Times New Roman', Times, serif;
@@ -53,9 +59,31 @@
         <br>
         Pererenan Nengah Guest House
     </p>
-    <p class="subtitle">
-        {{ \Carbon\Carbon::parse($periode)->locale('id')->monthName }} {{ \Carbon\Carbon::parse($periode)->year }}
-    </p>
+
+    <table border="0" width="100%" style="margin-top: 20px; margin-bottom: 10px;">
+        <tr>
+            <td>
+                <strong>Nama Admin :</strong> {{ auth()->guard('admin')->user()->nama_admin }}
+            </td>
+            <td>
+                <strong>Periode :</strong> {{ \Carbon\Carbon::parse($periode)->locale('id')->monthName }} {{ \Carbon\Carbon::parse($periode)->year }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Tanggal Cetak :</strong> {{ DateHelpers::formatDateLocalWithTime(\Carbon\Carbon::now()) }}
+            </td>
+            <td>
+                @php
+                    $total_pendapatan = 0;
+                    foreach ($data_laporan as $laporan) {
+                        $total_pendapatan += $laporan->total_harga_kamar;
+                    }
+                @endphp
+                <strong>Total Pendapatan Bulan :</strong> Rp . {{ number_format($total_pendapatan,0,',','.') }}
+            </td>
+        </tr>
+    </table>
 
     <table id="customers">
         <tr>
@@ -72,7 +100,7 @@
             <th>Status</th>
             <th style="text-align: center;">Total Harga</th>
         </tr>
-        @foreach ($data_laporan as $laporan)
+        @forelse ($data_laporan as $laporan)
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $laporan->no_reservasi }}</td>
@@ -87,7 +115,11 @@
             <td>{{ $laporan->status_reservasi_kamar }}</td>
             <td style="text-align: right;">Rp . {{ number_format($laporan->total_harga_kamar,0,',','.') }}</td>
         </tr>
-        @endforeach
+        @empty
+        <tr>
+            <td colspan="12">Belum ada data laporan pada bulan ini</td>
+        </tr>
+        @endforelse
     </table>
 
 </body>

@@ -156,7 +156,7 @@
                             </div>
                             <div class="col-lg-6 text-end">
                                 @if ($reservasi->status_reservasi == "Menunggu Pembayaran")
-                                    <a href="#" class="btn btn-danger btn-batalkan" data-id="{{ $reservasi->id }}"><i class="bi bi-x-circle"></i>&nbsp;&nbsp;Cancle</a>                                    
+                                    <a href="#" class="btn btn-danger btn-batalkan" data-id="{{ $reservasi->id }}"><i class="bi bi-x-circle"></i>&nbsp;&nbsp;Cancel</a>                                    
                                 @endif
 
                                 <button type="button" class="btn btn-success btn-get-booking" data-id="{{ $reservasi->id }}" {{-- data-bs-toggle="modal" data-bs-target="#modal-booking-details" --}}>
@@ -213,10 +213,10 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, Continue!',
-                    cancelButtonText: 'Cancle'
+                    cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = "/user/booking-cancle/"+data_id;
+                        window.location.href = "/user/booking-cancel/"+data_id;
                     }
                 });
             });

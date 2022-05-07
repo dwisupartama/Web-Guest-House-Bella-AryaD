@@ -28,7 +28,10 @@ class CreateTbReservasi extends Migration
             $table->integer('durasi_reservasi');
             $table->date('tgl_book_check_out');
             $table->bigInteger('total_pembayaran');
-            $table->enum('status_reservasi', ['Menunggu Pembayaran', 'Siap di Check-in', 'Sudah Check-in', 'Sudah Check-out', 'Dibatalkan']);
+            $table->string('bukti_pembayaran', 255)->nullable();
+            $table->dateTime('tgl_pembayaran')->nullable();
+            $table->dateTime('tgl_pembayaran_dikonfirmasi')->nullable();
+            $table->enum('status_reservasi', ['Menunggu Pembayaran', 'Menunggu Konfirmasi', 'Pembayaran di Tolak', 'Siap di Check-in', 'Sudah Check-in', 'Sudah Check-out', 'Dibatalkan']);
 
             $table->foreign('id_user')->references('id')->on('users');
 

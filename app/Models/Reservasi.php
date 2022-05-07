@@ -22,6 +22,9 @@ class Reservasi extends Model
         'durasi_reservasi',
         'tgl_book_check_out',
         'total_pembayaran',
+        'bukti_pembayaran',
+        'tgl_pembayaran',
+        'tgl_pembayaran_dikonfirmasi',
         'status_reservasi',
     ];
 

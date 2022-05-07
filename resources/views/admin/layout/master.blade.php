@@ -77,11 +77,11 @@
                             Data Admin
                         </a>
                         @endif
-                        <a class="nav-link @if(Route::is('admin.data-user.*')) active @endif" href="{{ route('admin.data-user.index') }}">
+                        <a class="nav-link @if(Route::is('admin.data-customer.*')) active @endif" href="{{ route('admin.data-customer.index') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-users"></i>
                             </div>
-                            Data User
+                            Data Customer
                         </a>
                         @if(auth()->guard('admin')->user()->hak_akses == "Admin")
                         <a class="nav-link @if(Route::is('admin.data-kamar.*')) active @endif" href="{{ route('admin.data-kamar.index') }}">

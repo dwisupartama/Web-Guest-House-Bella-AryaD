@@ -51,7 +51,7 @@ Route::middleware('auth:web')->group(function(){
     Route::post('/user/process-booking', [DataBookingController::class, 'processBooking'])->name('landing.user.processBooking');
     Route::get('/user/booking-list', [DataBookingController::class, 'bookingList'])->name('landing.user.bookingList');
     Route::get('/user/booking-detail/{id}', [DataBookingController::class, 'bookingDetail'])->name('landing.user.bookingDetail');
-    Route::get('/user/booking-cancle/{id}', [DataBookingController::class, 'batalkanBooking'])->name('landing.user.batalkanBooking');
+    Route::get('/user/booking-cancel/{id}', [DataBookingController::class, 'batalkanBooking'])->name('landing.user.batalkanBooking');
 
     Route::get('/user/profile-setting', [DataProfileSettingController::class, 'profileSetting'])->name('landing.user.profileSetting');
     Route::post('/user/profile-setting/update', [DataProfileSettingController::class, 'updateProfile'])->name('landing.user.profileSetting.update');
@@ -83,7 +83,7 @@ Route::group([
         Route::post('profile-setting/reset-password', [ProfileSettingController::class, 'resetPassword'])->name('profileSetting.resetPassword');
 
         Route::resource('data-admin', AdminController::class)->middleware('hakaksesadmin');
-        Route::resource('data-user', UserController::class);
+        Route::resource('data-customer', UserController::class);
         Route::resource('data-kamar', KamarController::class)->middleware('hakaksesadmin');
         Route::resource('data-konten', KontenController::class)->middleware('hakaksesadmin');
         Route::resource('data-gambar', GambarController::class)->middleware('hakaksesadmin');

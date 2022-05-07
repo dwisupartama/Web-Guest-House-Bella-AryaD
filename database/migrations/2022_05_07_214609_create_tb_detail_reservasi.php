@@ -31,13 +31,13 @@ class CreateTbDetailReservasi extends Migration
             
             $table->bigInteger('harga_kamar');
             $table->bigInteger('total_harga_kamar');
-            $table->enum('status_reservasi_kamar', ['Menunggu Pembayaran', 'Siap di Check-in', 'Sudah Check-in', 'Sudah Check-out', 'Dibatalkan']);
+            $table->enum('status_reservasi_kamar', ['Siap di Check-in', 'Sudah Check-in', 'Sudah Check-out', 'Dibatalkan']);
 
             $table->foreign('id_reservasi')->references('id')->on('tb_reservasi');
             $table->foreign('id_kamar')->references('id')->on('tb_kamar');
             $table->foreign('admin_check_in')->references('id')->on('tb_admin');
             $table->foreign('admin_check_out')->references('id')->on('tb_admin');
-
+            
             $table->timestamps();
         });
     }

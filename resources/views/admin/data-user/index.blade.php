@@ -1,18 +1,18 @@
 @extends('admin/layout/master')
 
-@section('title', 'Data User')
+@section('title', 'Data Customer')
 
 @section('content')
 <div class="alert alert-primary mb-4" role="alert">
-    Data User adalah pengelolaan data yang berisikan daftar dari user yang menggunakan website ini untuk melakukan pemesanan.
+    Data Customer adalah pengelolaan data yang berisikan daftar dari customer yang menggunakan website ini untuk melakukan pemesanan.
 </div>
 <div class="card mb-4">
     <div class="card-header">
         <div class="w-auto float-start mt-1 fs-5">
             <i class="fas fa-table me-1"></i>
-            Data User
+            Data Customer
         </div>
-        <a href="{{ route('admin.data-user.create') }}" class="btn btn-primary float-end">
+        <a href="{{ route('admin.data-customer.create') }}" class="btn btn-primary float-end">
             <i class="fas fa-plus"></i>
             Tambah Data
         </a>
@@ -34,7 +34,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nama User</th>
+                    <th>Nama Customer</th>
                     <th>Email</th>
                     <th>Asal Negara</th>
                     <th>No Telp</th>
@@ -44,7 +44,7 @@
             <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>Nama User</th>
+                    <th>Nama Customer</th>
                     <th>Email</th>
                     <th>Asal Negara</th>
                     <th>No Telp</th>
@@ -60,7 +60,7 @@
                     <td class="align-middle">{{ $user->asal_negara }}</td>
                     <td class="align-middle">{{ $user->no_telp }}</td>
                     <td class="align-middle">
-                        <a href="{{ route('admin.data-user.edit', $user->id) }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('admin.data-customer.edit', $user->id) }}" class="btn btn-success btn-sm">
                             <i class="fas fa-edit"></i>
                             Edit
                         </a>
@@ -68,7 +68,7 @@
                             <i class="fas fa-trash"></i>
                             Delete
                         </a>
-                        <form id="delete-data-{{ $user->id }}" action="{{ route('admin.data-user.destroy', $user->id) }}" method="POST" class="d-none">
+                        <form id="delete-data-{{ $user->id }}" action="{{ route('admin.data-customer.destroy', $user->id) }}" method="POST" class="d-none">
                             @method('DELETE');
                             @csrf
                         </form>
