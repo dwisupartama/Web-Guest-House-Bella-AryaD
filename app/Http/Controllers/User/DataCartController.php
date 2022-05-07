@@ -31,8 +31,8 @@ class DataCartController extends Controller
                     return $query->where('id_user', auth()->guard('web')->user()->id);
                 })
             ],
-            'adults' => 'required|integer',
-            'children' => 'required|integer',
+            'adults' => 'required|integer|max:2',
+            'children' => 'required|integer|max:2',
         ],
         [
             'id_kamar.unique' => "The room is already in the cart list",

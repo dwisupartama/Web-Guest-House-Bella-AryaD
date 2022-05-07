@@ -1,6 +1,6 @@
 @extends('admin/layout/master')
 
-@section('title', 'Edit Data Gambar')
+@section('title', 'Edit Data Galeri')
 
 @section('style')
 <style>
@@ -12,12 +12,12 @@
 
 @section('content')
 <div class="alert alert-primary col-lg-7 mb-4" role="alert">
-    Perbaharui data gambar agar website mendapatkan data gambar terbaru untuk disimpan.
+    Perbaharui data galeri agar website mendapatkan data gambar terbaru untuk disimpan.
 </div>
 <div class="card col-lg-7 mb-4">
     <div class="card-header">
         <i class="fas fa-edit me-1"></i>
-        Edit Gambar
+        Edit Galeri
     </div>
     <div class="card-body">
         <form action="{{ route('admin.data-gambar.update', $data_gambar->id) }}" enctype="multipart/form-data" method="POST">

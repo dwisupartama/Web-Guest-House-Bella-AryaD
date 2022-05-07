@@ -1,16 +1,16 @@
 @extends('admin/layout/master')
 
-@section('title', 'Data Gambar')
+@section('title', 'Data Galeri')
 
 @section('content')
 <div class="alert alert-primary mb-4" role="alert">
-    Data Gambar adalah pengelolaan data yang berisikan daftar dari gambar yang terdapat pada konten.
+    Data Galeri adalah pengelolaan data yang berisikan daftar dari gambar yang terdapat pada konten.
 </div>
 <div class="card mb-4">
     <div class="card-header">
         <div class="w-auto float-start mt-1 fs-5">
             <i class="fas fa-table me-1"></i>
-            Data Gambar
+            Data Galeri
         </div>
         <a href="{{ route('admin.data-gambar.create') }}" class="btn btn-primary float-end">
             <i class="fas fa-plus"></i>

@@ -112,7 +112,7 @@
                         </div>
                     @empty
                         <div class="col-lg-12">
-                            <div class="alert alert-light text-center" role="alert">
+                            <div class="alert alert-primary text-center" role="alert">
                                 There are no rooms of that type available on that date 
                             </div>
                         </div>
@@ -138,7 +138,7 @@
 
             var check_out_estimination = new Date(date_check_in);
             check_out_estimination.setDate(date_check_in.getDate()+parseInt(duration));
-
+            
             var estimination_day = check_out_estimination.getDate();
             estimination_day = ""+estimination_day;
             var estimination_month = check_out_estimination.getMonth() + 1;

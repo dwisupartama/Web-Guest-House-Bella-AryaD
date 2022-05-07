@@ -12,8 +12,8 @@
                     <h1 class="display-5 fw-bolder text-white mb-2">Pererenan Nengah Guest House</h1>
                     <p class="lead fw-normal text-white-50 mb-4">House guests should be regarded as perishables: Leave them out too long and the go bad!</p>
                     <div class="d-grid gap-1 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Booking Now</a>
-                        <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{ route('landing.booking') }}">Booking Now</a>
+                        <a class="btn btn-outline-light btn-lg px-4" href="{{ route('landing.content') }}">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -28,28 +28,28 @@
 <section class="py-5" id="features">
     <div class="container px-5 my-5">
         <div class="row gx-5">
-            <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">The uniqueness of our guest house.</h2></div>
+            <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">The services we provide at the guest house.</h2></div>
             <div class="col-lg-8">
                 <div class="row gx-5 row-cols-1 row-cols-md-2">
                     <div class="col mb-5 h-100">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                        <h2 class="h5">Featured title</h2>
-                        <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-wifi"></i></div>
+                        <h2 class="h5 fw-bolder">Wi-Fi</h2>
+                        <p class="mb-0">Wifi with high internet speed. Accessible in all rooms in the guest house</p>
                     </div>
                     <div class="col mb-5 h-100">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                        <h2 class="h5">Featured title</h2>
-                        <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-snow2"></i></div>
+                        <h2 class="h5 fw-bolder">Air Conditioner</h2>
+                        <p class="mb-0">AC is available with a cool and comfortable room temperature for the stayers</p>
                     </div>
                     <div class="col mb-5 mb-md-0 h-100">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                        <h2 class="h5">Featured title</h2>
-                        <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-moisture"></i></div>
+                        <h2 class="h5 fw-bolder">Water Heater</h2>
+                        <p class="mb-0">Provides hot water that can make the stay comfortable when they want to clean themselves.</p>
                     </div>
                     <div class="col h-100">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                        <h2 class="h5">Featured title</h2>
-                        <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-water"></i></div>
+                        <h2 class="h5 fw-bolder">Pool</h2>
+                        <p class="mb-0">Large swimming pool to use to stay with the family.</p>
                     </div>
                 </div>
             </div>
