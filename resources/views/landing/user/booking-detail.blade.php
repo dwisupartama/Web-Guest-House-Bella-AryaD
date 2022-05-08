@@ -1,3 +1,13 @@
+@if($data_reservasi->status_reservasi == "Menunggu Pembayaran")
+    <div class="alert alert-danger" role="alert" id="countdown">
+        Time left to make payment : <strong>00h 00m 00s</strong>
+    </div>
+@endif
+@if($data_reservasi->status_reservasi == "Menunggu Pembayaran" || $data_reservasi->status_reservasi == "Menunggu Konfirmasi")
+    <div class="alert alert-primary" role="alert">
+        Payment can be made to <strong>{{$no_rekening}}({{$jenis_bank}})</strong> on behalf of <strong>{{$atas_nama}}</strong>
+    </div>
+@endif
 <div class="row">
     <div class="col-lg-8">
         <div class="row mb-2">
@@ -7,6 +17,10 @@
             <div class="col-lg-6 text-end">
                 @if ($data_reservasi->status_reservasi == "Menunggu Pembayaran")
                     <span class="badge bg-warning text-dark">Waiting Payment</span>
+                @elseif ($data_reservasi->status_reservasi == "Menunggu Konfirmasi")
+                    <span class="badge bg-primary">Waiting Confirmation</span>
+                @elseif ($data_reservasi->status_reservasi == "Pembayaran di Tolak")
+                    <span class="badge bg-danger">Payment Declined</span>
                 @elseif($data_reservasi->status_reservasi == "Siap di Check-in")
                     <span class="badge bg-primary">Ready to Check-in</span>
                 @elseif($data_reservasi->status_reservasi == "Sudah Check-in")
@@ -74,8 +88,8 @@
                             <small>Room Status</small>
                         </div>
                         <div class="col-lg-6 text-end">
-                            @if ($detail_reservasi->status_reservasi_kamar == "Menunggu Pembayaran")
-                                <span class="badge bg-warning text-dark">Waiting Payment</span>
+                            @if ($detail_reservasi->status_reservasi_kamar == "Belum Siap di Check-in")
+                                <span class="badge bg-warning text-dark">Not Ready to Check-in</span>
                             @elseif($detail_reservasi->status_reservasi_kamar == "Siap di Check-in")
                                 <span class="badge bg-primary">Ready to Check-in</span>
                             @elseif($detail_reservasi->status_reservasi_kamar == "Sudah Check-in")
@@ -199,5 +213,62 @@
                     {{ DateHelpers::formatDateInggris($data_reservasi->tgl_book_check_out) }}</p>
             </div>
         </div>
+        @if($data_reservasi->status_reservasi == "Menunggu Pembayaran")
+            <div class="alert alert-warning" role="alert">
+                No payment has been uploaded yet
+            </div>
+        @endif
+        @if($data_reservasi->status_reservasi != "Menunggu Pembayaran" && $data_reservasi->status_reservasi != "Dibatalkan")
+            <label for="" class="form-label">Proof of payment</label>
+            <img src="{{ asset('storage/payment/'.$data_reservasi->bukti_pembayaran) }}" class="rounded img-fluid mb-2">
+        @endif
+        @if($data_reservasi->status_reservasi == "Menunggu Pembayaran" || $data_reservasi->status_reservasi == "Menunggu Konfirmasi" || $data_reservasi->status_reservasi == "Pembayaran di Tolak")
+        <form action="{{ route('landing.user.bookingPayment', $data_reservasi->id) }}" enctype="multipart/form-data" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="" class="form-label">Upload Proof of payment</label>
+                <input class="form-control" type="file" required name="bukti">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Upload</button>
+            </div>
+        </form>
+        @endif
     </div>
 </div>
+@if($data_reservasi->status_reservasi == "Menunggu Pembayaran")
+@php
+    $date_deadline = \Carbon\Carbon::parse($data_reservasi->tgl_pemesanan)->addDay();
+    $date_js = $date_deadline->shortEnglishMonth.' '.$date_deadline->day.', '.$date_deadline->year.' '.$date_deadline->hour.':'.$date_deadline->minute.':'.$date_deadline->second;
+@endphp
+<script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("{{ $date_js }}").getTime();
+    
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    
+      // Get today's date and time
+      var now = new Date().getTime();
+    
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+    
+      // Time calculations for days, hours, minutes and seconds
+    //   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+      // Display the result in the element with id="demo"
+      document.getElementById("countdown").innerHTML = "Time left to make payment : <strong>" + hours + "h "
+      + minutes + "m " + seconds + "s</strong>";
+    
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        location.reload();
+      }
+    }, 1000);
+</script>
+@endif

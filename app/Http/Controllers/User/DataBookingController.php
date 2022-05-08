@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use DateHelpers;
 
 use App\Models\Cart;
 use App\Models\DetailReservasi;
@@ -107,7 +108,7 @@ class DataBookingController extends Controller
                             'jumlah_anak' => $cart->jumlah_anak,
                             'harga_kamar' => $cart->kamar->harga_kamar,
                             'total_harga_kamar' => $cart->kamar->harga_kamar * $request->duration,
-                            'status_reservasi_kamar' => "Menunggu Pembayaran",
+                            'status_reservasi_kamar' => "Belum Siap di Check-in",
                         ]);
     
                         if($tambah_detail_reservasi){
@@ -120,7 +121,14 @@ class DataBookingController extends Controller
                     if($tambah_reservasi && $status_add_cart){
                         $delete_cart_user = Cart::where('id_user', auth()->guard('web')->user()->id)->delete();
                         if($delete_cart_user){
-                            return redirect()->route('landing.user.bookingList')->with('success', 'Room successfully booked');
+                            $tgl_pembayaran_terakhir = DateHelpers::formatDateInggrisWithTime($date_now->addDay()->toDateTimeString());
+                            $path = public_path().'/json/rekening.json';
+                            $json_rekening = json_decode(file_get_contents($path), true);
+                            $jenis_bank = $json_rekening['rekening'][0]['jenis_bank'];
+                            $no_rekening = $json_rekening['rekening'][0]['no_rekening'];
+                            $atas_nama = $json_rekening['rekening'][0]['atas_nama'];
+                            return redirect()->route('landing.user.bookingList')->with('success', 'Room successfully booked, please make payment before <br><b>'.$tgl_pembayaran_terakhir.'</b><br> to <b>'.$no_rekening.'('.$jenis_bank.')</b> on behalf of <b>'.$atas_nama.'</b>');
+                            // return redirect()->route('landing.user.bookingList')->with('success', 'Room successfully booked, please make payment before '.$tgl_pembayaran_terakhir);
                         }
                     }
                 }
@@ -144,7 +152,10 @@ class DataBookingController extends Controller
         $jumlah_complete = $data_reservasi->where('status_reservasi', 'Sudah Check-out')->count();
         $jumlah_siap_check_in = $data_reservasi->where('status_reservasi', 'Siap di Check-in')->count();
         $jumlah_sudah_check_in = $data_reservasi->where('status_reservasi', 'Sudah Check-in')->count();
-        $jumlah_on_progress = $jumlah_siap_check_in + $jumlah_sudah_check_in;
+        $jumlah_menunggu_konfirmasi = $data_reservasi->where('status_reservasi', 'Menunggu Konfirmasi')->count();
+        $jumlah_pembayaran_ditolak = $data_reservasi->where('status_reservasi', 'Pembayaran di Tolak')->count();
+        $jumlah_canceled = $data_reservasi->where('status_reservasi', 'Dibatalkan')->count();
+        $jumlah_on_progress = $jumlah_siap_check_in + $jumlah_sudah_check_in + $jumlah_menunggu_konfirmasi + $jumlah_pembayaran_ditolak;
         $jumlah_waiting_payment = $data_reservasi->where('status_reservasi', 'Menunggu Pembayaran')->count();
         
         return view('landing.user.booking-list', [
@@ -153,17 +164,26 @@ class DataBookingController extends Controller
             'jumlah_reservasi' => $jumlah_reservasi,
             'jumlah_complete' => $jumlah_complete,
             'jumlah_on_progress' => $jumlah_on_progress,
-            'jumlah_waiting_payment' => $jumlah_waiting_payment
+            'jumlah_waiting_payment' => $jumlah_waiting_payment,
+            'jumlah_canceled' => $jumlah_canceled
         ]);
     }
 
     public function bookingDetail($id){
         $data_reservasi = Reservasi::find($id);
         $data_detail_reservasi = DetailReservasi::where('id_reservasi', $id)->latest()->get();
+        $path = public_path().'/json/rekening.json';
+        $json_rekening = json_decode(file_get_contents($path), true);
+        $jenis_bank = $json_rekening['rekening'][0]['jenis_bank'];
+        $no_rekening = $json_rekening['rekening'][0]['no_rekening'];
+        $atas_nama = $json_rekening['rekening'][0]['atas_nama'];
 
         return view('landing.user.booking-detail', [
             'data_reservasi' => $data_reservasi,
             'data_detail_reservasi' => $data_detail_reservasi,
+            'jenis_bank' => $jenis_bank,
+            'no_rekening' => $no_rekening,
+            'atas_nama' => $atas_nama,
         ]);
     }
     
@@ -191,5 +211,21 @@ class DataBookingController extends Controller
                 return redirect()->back()->with('success', 'Booking has been cancelled');
             }
         }
+    }
+
+    public function bookingPayment(Request $request, $id){
+        $reservasi = Reservasi::find($id);
+
+        $image_name = $reservasi->no_reservasi." - PAYMENT.".$request->bukti->extension();
+        $request->bukti->storeAs('/public/payment', $image_name);
+
+        $reservasi->bukti_pembayaran = $image_name;
+        $now = Carbon::now();
+        $reservasi->status_reservasi = 'Menunggu Konfirmasi';
+        $reservasi->tgl_pembayaran = $now->toDateTimeString();
+
+        $reservasi->save();
+
+        return redirect()->back()->with('success', 'Proof of payment successfully uploaded.');
     }
 }

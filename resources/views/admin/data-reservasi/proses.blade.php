@@ -3,7 +3,7 @@
 @section('title', 'Detail Reservasi')
 
 @section('content')
-<div class="alert alert-primary mb-4 col-lg-9" role="alert">
+<div class="alert alert-primary mb-4 col-lg-12" role="alert">
     Ini merupakan halaman untuk melakukan proses pada data reservasi yang dipesan oleh customer.
 </div>
 
@@ -18,182 +18,240 @@ Swal.fire({
 </script>
 @endif
 
-<div class="card col-lg-9 mb-3">
-    <div class="card-header">
-        <div class="w-auto float-start fs-6">
-            <i class="fas fa-table"></i>
-            Detail Reservasi
+<div class="row">
+    <div class="col-lg-8 mb-3">
+        <div class="card ">
+            <div class="card-header">
+                <div class="w-auto float-start fs-6">
+                    <i class="fas fa-table"></i>
+                    Detail Reservasi
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Status Reservasi
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        @if ($data_reservasi->status_reservasi == "Menunggu Pembayaran")
+                            <span class="badge bg-warning text-dark">{{ $data_reservasi->status_reservasi }}</span>
+                        @elseif ($data_reservasi->status_reservasi == "Menunggu Konfirmasi")
+                            <span class="badge bg-primary">{{ $data_reservasi->status_reservasi }}</span>
+                        @elseif($data_reservasi->status_reservasi == "Siap di Check-in")
+                            <span class="badge bg-primary">{{ $data_reservasi->status_reservasi }}</span>
+                        @elseif($data_reservasi->status_reservasi == "Sudah Check-in")
+                            <span class="badge bg-success">{{ $data_reservasi->status_reservasi }}</span>
+                        @elseif($data_reservasi->status_reservasi == "Sudah Check-out")
+                            <span class="badge bg-success">{{ $data_reservasi->status_reservasi }}</span>
+                        @else
+                            <span class="badge bg-danger">{{ $data_reservasi->status_reservasi }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        No. Reservasi
+                    </div>
+                    <div class="col-lg-6 text-end text-primary fw-bolder">
+                        {{ $data_reservasi->no_reservasi }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Tanggal Pemesanan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        {{ DateHelpers::formatDateLocalWithTime($data_reservasi->tgl_pemesanan) }} WITA
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Tanggal Check-in
+                    </div>
+                    <div class="col-lg-6 text-end fw-bolder text-success">
+                        {{ DateHelpers::formatDateLocal($data_reservasi->tgl_book_check_in) }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Tanggal Check-out
+                    </div>
+                    <div class="col-lg-6 text-end fw-bolder text-success">
+                        {{ DateHelpers::formatDateLocal($data_reservasi->tgl_book_check_out) }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Durasi
+                    </div>
+                    <div class="col-lg-6 text-end fw-bolder text-primary">
+                        {{ $data_reservasi->durasi_reservasi }} Malam
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6 pt-1">
+                        Data User Pemesan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        (ID : {{ $data_reservasi->id_user }}) {{ $data_reservasi->user->nama }}&nbsp;&nbsp;&nbsp;<a href="{{ route('admin.data-customer.edit', [$data_reservasi->id_user]) }}" class="btn btn-primary btn-sm"><i class="fas fa-file"></i>&nbsp;&nbsp;Cek Data</a>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Nama Pemesan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        {{ $data_reservasi->nama_user }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Email Pemesan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        {{ $data_reservasi->email_user }}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        Asal Negara Pemesan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        {{ $data_reservasi->asal_negara_user }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        No. Telp Pemesan
+                    </div>
+                    <div class="col-lg-6 text-end">
+                        {{ $data_reservasi->no_telp_user }}
+                    </div>
+                </div>
+                <hr class="dropdown-divider">
+                <div class="fw-bolder mb-2">
+                    Payment Details
+                </div>
+                @foreach ($data_detail_reservasi as $detail_reservasi)
+                    <div class="row mb-1">
+                        <div class="col-lg-6">
+                            Price {{ $detail_reservasi->kamar->tipeKamar->tipe_kamar }} Room No. {{ $detail_reservasi->kamar->no_kamar }}
+                        </div>
+                        <div class="col-lg-6 text-end">
+                            Rp . {{ number_format($detail_reservasi->total_harga_kamar,0,',','.') }}
+                        </div>
+                    </div>
+                @endforeach
+                <hr class="dropdown-divider">
+                <div class="row mb-1">
+                    <div class="col-lg-6 fw-bolder">
+                        Total Payment
+                    </div>
+                    <div class="col-lg-6 text-end fw-bolder">
+                        Rp . {{ number_format($data_reservasi->total_pembayaran,0,',','.') }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Status Reservasi
-            </div>
-            <div class="col-lg-6 text-end">
-                @if ($data_reservasi->status_reservasi == "Menunggu Pembayaran")
-                    <span class="badge bg-warning text-dark">{{ $data_reservasi->status_reservasi }}</span>
-                @elseif($data_reservasi->status_reservasi == "Siap di Check-in")
-                    <span class="badge bg-primary">{{ $data_reservasi->status_reservasi }}</span>
-                @elseif($data_reservasi->status_reservasi == "Sudah Check-in")
-                    <span class="badge bg-success">{{ $data_reservasi->status_reservasi }}</span>
-                @elseif($data_reservasi->status_reservasi == "Sudah Check-out")
-                    <span class="badge bg-success">{{ $data_reservasi->status_reservasi }}</span>
-                @else
-                    <span class="badge bg-danger">{{ $data_reservasi->status_reservasi }}</span>
-                @endif
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                No. Reservasi
-            </div>
-            <div class="col-lg-6 text-end text-primary fw-bolder">
-                {{ $data_reservasi->no_reservasi }}
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Tanggal Pemesanan
-            </div>
-            <div class="col-lg-6 text-end">
-                {{ DateHelpers::formatDateLocalWithTime($data_reservasi->tgl_pemesanan) }} WITA
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Tanggal Check-in
-            </div>
-            <div class="col-lg-6 text-end fw-bolder text-success">
-                {{ DateHelpers::formatDateLocal($data_reservasi->tgl_book_check_in) }}
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Tanggal Check-out
-            </div>
-            <div class="col-lg-6 text-end fw-bolder text-success">
-                {{ DateHelpers::formatDateLocal($data_reservasi->tgl_book_check_out) }}
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Durasi
-            </div>
-            <div class="col-lg-6 text-end fw-bolder text-primary">
-                {{ $data_reservasi->durasi_reservasi }} Malam
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6 pt-1">
-                Data User Pemesan
-            </div>
-            <div class="col-lg-6 text-end">
-                (ID : {{ $data_reservasi->id_user }}) {{ $data_reservasi->user->nama }}&nbsp;&nbsp;&nbsp;<a href="{{ route('admin.data-customer.edit', [$data_reservasi->id_user]) }}" class="btn btn-primary btn-sm"><i class="fas fa-file"></i>&nbsp;&nbsp;Cek Data</a>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Nama Pemesan
-            </div>
-            <div class="col-lg-6 text-end">
-                {{ $data_reservasi->nama_user }}
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Email Pemesan
-            </div>
-            <div class="col-lg-6 text-end">
-                {{ $data_reservasi->email_user }}
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-lg-6">
-                Asal Negara Pemesan
-            </div>
-            <div class="col-lg-6 text-end">
-                {{ $data_reservasi->asal_negara_user }}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-lg-6">
-                No. Telp Pemesan
-            </div>
-            <div class="col-lg-6 text-end">
-                {{ $data_reservasi->no_telp_user }}
-            </div>
-        </div>
-        <hr class="dropdown-divider">
-        <div class="fw-bolder mb-2">
-            Payment Details
-        </div>
-        @foreach ($data_detail_reservasi as $detail_reservasi)
-            <div class="row mb-1">
-                <div class="col-lg-6">
-                    Price {{ $detail_reservasi->kamar->tipeKamar->tipe_kamar }} Room No. {{ $detail_reservasi->kamar->no_kamar }}
-                </div>
-                <div class="col-lg-6 text-end">
-                    Rp . {{ number_format($detail_reservasi->total_harga_kamar,0,',','.') }}
-                </div>
-            </div>
-        @endforeach
-        <hr class="dropdown-divider">
-        <div class="row mb-1">
-            <div class="col-lg-6 fw-bolder">
-                Total Payment
-            </div>
-            <div class="col-lg-6 text-end fw-bolder">
-                Rp . {{ number_format($data_reservasi->total_pembayaran,0,',','.') }}
-            </div>
-        </div>
-        <hr class="dropdown-divider">
-        <div class="col-lg-12 text-end">
-            @if($data_reservasi->status_reservasi == "Menunggu Pembayaran" || $data_reservasi->status_reservasi == "Siap di Check-in")
-                @php
-                    $status_batal_reservasi = "";
-                    foreach ($data_detail_reservasi as $kamar_reservasi) {
-                        if($kamar_reservasi->datetime_check_in != null || $kamar_reservasi->datetime_check_out != null) {
-                            $status_batal_reservasi = "gone";
-                        }
-                    }
-                @endphp
 
-                @if($status_batal_reservasi != "gone")
-                    <a href="" class="btn btn-danger btn-batalkan" data-id="{{ $data_reservasi->id }}">
-                        <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
-                    </a>
-                @else
-                <a href="#" class="btn btn-danger disabled">
-                    <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
-                </a>
-                @endif
-            @else
-                <a href="#" class="btn btn-danger disabled">
-                    <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
-                </a>
-            @endif
-            @if($data_reservasi->status_reservasi == "Menunggu Pembayaran")
-                <a href="{{ route('admin.data-reservasi.telahDibayarkan', [$data_reservasi->id]) }}" class="btn btn-secondary">
-                    <i class="fas fa-check"></i>&nbsp;&nbsp;Telah Dibayarkan
-                </a>
-            @elseif($data_reservasi->status_reservasi == "Siap di Check-in")
-                @php
-                    $status_batal_pembayaran = "";
-                    foreach ($data_detail_reservasi as $kamar_reservasi) {
-                        if($kamar_reservasi->datetime_check_in != null || $kamar_reservasi->datetime_check_out != null) {
-                            $status_batal_pembayaran = "gone";
-                        }
-                    }
-                @endphp
-                @if($status_batal_pembayaran != "gone")
-                    <a href="{{ route('admin.data-reservasi.batalPembayaran', [$data_reservasi->id]) }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Pembayaran
-                    </a>
-                @endif
-            @endif
+    <div class="col-lg-4 mb-3">
+        <div class="card ">
+            <div class="card-header">
+                <div class="w-auto float-start fs-6">
+                    <i class="fas fa-table"></i>
+                    Aksi
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-12">
+                    
+
+                    @if($data_reservasi->status_reservasi == "Menunggu Konfirmasi" || $data_reservasi->status_reservasi == "Pembayaran di Tolak")
+                        <label for="" class="form-label">Bukti Pembayaran</label>
+                        <img src="{{ asset('storage/payment/'.$data_reservasi->bukti_pembayaran) }}" class="rounded img-fluid mb-2">
+                        <a href="{{ asset('storage/payment/'.$data_reservasi->bukti_pembayaran) }}" class="link-primary mb-3" target="_blank">Lihat Bukti</a>
+                        <div class="d-grid gap-2 mb-2 mt-3">
+                            <a href="{{ route('admin.data-reservasi.telahDibayarkan', [$data_reservasi->id]) }}" class="btn btn-success">
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;Terima Pembayaran
+                            </a>
+                        </div>
+                        <div class="d-grid gap-2 mb-2">
+                            <a href="{{ route('admin.data-reservasi.tolakPembayaran', [$data_reservasi->id]) }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i>&nbsp;&nbsp;Tolak Pembayaran
+                            </a>
+                        </div>
+                    @elseif($data_reservasi->status_reservasi == "Menunggu Pembayaran")
+                        <div class="alert alert-warning" role="alert">
+                            Belum ada dilakukan pembayaran
+                        </div>
+                        <div class="d-grid gap-2 mb-2">
+                            <a href="#" class="btn btn-success disabled">
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;Terima Pembayaran
+                            </a>
+                        </div>
+                        <div class="d-grid gap-2 mb-2">
+                            <a href="#" class="btn btn-secondary disabled">
+                                <i class="fas fa-times"></i>&nbsp;&nbsp;Tolak Pembayaran
+                            </a>
+                        </div>
+                    @elseif($data_reservasi->status_reservasi != "Dibatalkan")
+                        <label for="" class="form-label">Bukti Pembayaran</label>
+                        <img src="{{ asset('storage/payment/'.$data_reservasi->bukti_pembayaran) }}" class="rounded img-fluid mb-2">
+                        <a href="{{ asset('storage/payment/'.$data_reservasi->bukti_pembayaran) }}" class="link-primary" target="_blank">Lihat Bukti</a>
+                        <div class="mt-3"></div>
+                    @endif
+
+                    @if($data_reservasi->status_reservasi == "Menunggu Pembayaran" || $data_reservasi->status_reservasi == "Menunggu Konfirmasi" || $data_reservasi->status_reservasi == "Pembayaran di Tolak" || $data_reservasi->status_reservasi == "Siap di Check-in")
+                        @php
+                            $status_batal_reservasi = "";
+                            foreach ($data_detail_reservasi as $kamar_reservasi) {
+                                if($kamar_reservasi->datetime_check_in != null || $kamar_reservasi->datetime_check_out != null) {
+                                    $status_batal_reservasi = "gone";
+                                }
+                            }
+                        @endphp
+        
+                        @if($status_batal_reservasi != "gone")
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="" class="btn btn-danger btn-batalkan" data-id="{{ $data_reservasi->id }}">
+                                    <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
+                                </a>
+                            </div>
+                        @else
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="#" class="btn btn-danger disabled">
+                                    <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
+                                </a>
+                            </div>
+                        @endif
+                    @else
+                        <div class="d-grid gap-2 mb-2">
+                            <a href="#" class="btn btn-danger disabled">
+                                <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Reservasi
+                            </a>
+                        </div>
+                    @endif
+                    {{-- @elseif($data_reservasi->status_reservasi == "Siap di Check-in")
+                        @php
+                            $status_batal_pembayaran = "";
+                            foreach ($data_detail_reservasi as $kamar_reservasi) {
+                                if($kamar_reservasi->datetime_check_in != null || $kamar_reservasi->datetime_check_out != null) {
+                                    $status_batal_pembayaran = "gone";
+                                }
+                            }
+                        @endphp
+                        @if($status_batal_pembayaran != "gone")
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="{{ route('admin.data-reservasi.batalPembayaran', [$data_reservasi->id]) }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times"></i>&nbsp;&nbsp;Batalkan Pembayaran
+                                </a>
+                            </div>
+                        @endif
+                    @endif --}}
+                </div>
+            </div>
         </div>
-        <hr class="dropdown-divider">
     </div>
 </div>
 
@@ -237,7 +295,7 @@ Swal.fire({
                                 <small>Room Status</small>
                             </div>
                             <div class="col-lg-6 text-end">
-                                @if ($detail_reservasi->status_reservasi_kamar == "Menunggu Pembayaran")
+                                @if ($detail_reservasi->status_reservasi_kamar == "Belum Siap di Check-in")
                                     <span class="badge bg-warning text-dark">{{ $detail_reservasi->status_reservasi_kamar }}</span>
                                 @elseif($detail_reservasi->status_reservasi_kamar == "Siap di Check-in")
                                     <span class="badge bg-primary">{{ $detail_reservasi->status_reservasi_kamar }}</span>

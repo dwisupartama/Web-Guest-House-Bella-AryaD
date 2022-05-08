@@ -53,7 +53,7 @@
                     <td class="align-middle fw-bolder 
                     @if($reservasi->status_reservasi == "Menunggu Pembayaran")
                         text-warning
-                    @elseif($reservasi->status_reservasi == "Siap di Check-in" || $reservasi->status_reservasi == "Sudah Check-in")
+                    @elseif($reservasi->status_reservasi == "Siap di Check-in" || $reservasi->status_reservasi == "Sudah Check-in" || $reservasi->status_reservasi == "Menunggu Konfirmasi")
                         text-primary
                     @elseif($reservasi->status_reservasi == "Sudah Check-out")
                         text-success

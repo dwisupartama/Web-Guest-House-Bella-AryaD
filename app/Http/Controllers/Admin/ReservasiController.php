@@ -288,6 +288,16 @@ class ReservasiController extends Controller
         }
     }
 
+    public function tolakPembayaran($id){
+        $data_reservasi = Reservasi::find($id);
+        $data_reservasi->status_reservasi = "Pembayaran di Tolak";
+        $data_reservasi->save();
+
+        if($data_reservasi){
+            return redirect()->back();
+        }
+    }
+
     public function batalPembayaran($id){
         $data_detail_reservasi = DetailReservasi::where('id_reservasi', $id)->get();
 

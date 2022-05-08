@@ -8,7 +8,7 @@
     Swal.fire({
         icon: "success",
         title: "Successful",
-        text: "{!! \Session::get('success') !!}",
+        html: "{!! \Session::get('success') !!}",
         confirmButtonColor: '#3085d6',
     });
     </script>
@@ -37,10 +37,12 @@
                     $complete = ($jumlah_complete / $jumlah_reservasi) * 100;
                     $on_progress = ($jumlah_on_progress / $jumlah_reservasi) * 100;
                     $waiting_payment = ($jumlah_waiting_payment / $jumlah_reservasi) * 100;
+                    $canceled = ($jumlah_canceled / $jumlah_reservasi) * 100;
                 }else{
                     $complete = 0;
                     $on_progress = 0;
                     $waiting_payment = 0;
+                    $canceled = 0;
                 }
             @endphp
             <div class="card border-0 bg-success bg-opacity-10 mb-3">
@@ -67,6 +69,15 @@
                     <p class="fs-3 fw-bold text-warning">{{ $jumlah_waiting_payment }}<span class="fs-5"> Order</span></p>
                     <div class="progress bg-secondary bg-opacity-25">
                         <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ $waiting_payment }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $waiting_payment }}%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-0 bg-danger bg-opacity-10">
+                <div class="card-body">
+                    <div class="fs-6 fw-normal text-danger">Canceled</div>
+                    <p class="fs-3 fw-bold text-danger">{{ $jumlah_canceled }}<span class="fs-5"> Order</span></p>
+                    <div class="progress bg-secondary bg-opacity-25">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ $canceled }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $canceled }}%"></div>
                     </div>
                 </div>
             </div>
@@ -103,16 +114,32 @@
                                 </span>
                             </div>
                             <div class="col-lg-4 text-end align-middle">
+                                <div>
+                                    @if ($reservasi->status_reservasi == "Menunggu Pembayaran")
+                                        <span class="badge bg-warning text-dark">Waiting Payment</span>
+                                    @elseif ($reservasi->status_reservasi == "Menunggu Konfirmasi")
+                                        <span class="badge bg-primary">Waiting Confirmation</span>
+                                    @elseif ($reservasi->status_reservasi == "Pembayaran di Tolak")
+                                        <span class="badge bg-danger">Payment Declined</span>
+                                    @elseif($reservasi->status_reservasi == "Siap di Check-in")
+                                        <span class="badge bg-primary">Ready to Check-in</span>
+                                    @elseif($reservasi->status_reservasi == "Sudah Check-in")
+                                        <span class="badge bg-success">Already Checked-in</span>
+                                    @elseif($reservasi->status_reservasi == "Sudah Check-out")
+                                        <span class="badge bg-success">Already Checked-out</span>
+                                    @else
+                                        <span class="badge bg-danger">Canceled</span>
+                                    @endif
+                                </div>
                                 @if ($reservasi->status_reservasi == "Menunggu Pembayaran")
-                                    <span class="badge bg-warning text-dark">Waiting Payment</span>
-                                @elseif($reservasi->status_reservasi == "Siap di Check-in")
-                                    <span class="badge bg-primary">Ready to Check-in</span>
-                                @elseif($reservasi->status_reservasi == "Sudah Check-in")
-                                    <span class="badge bg-success">Already Checked-in</span>
-                                @elseif($reservasi->status_reservasi == "Sudah Check-out")
-                                    <span class="badge bg-success">Already Checked-out</span>
-                                @else
-                                    <span class="badge bg-danger">Canceled</span>
+                                    <span class="badge text-danger border border-danger">
+                                        <i class="bi bi-calendar"></i>
+                                        &nbsp;
+                                        @php
+                                            $pay_before = DateHelpers::formatDateInggrisWithTime(\Carbon\Carbon::parse($reservasi->tgl_pemesanan)->addDay()->toDateTimeString());
+                                        @endphp
+                                        Pay Before : {{ $pay_before }}
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -155,7 +182,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 text-end">
-                                @if ($reservasi->status_reservasi == "Menunggu Pembayaran")
+                                @if ($reservasi->status_reservasi == "Menunggu Pembayaran" || $reservasi->status_reservasi == "Menunggu Konfirmasi" || $reservasi->status_reservasi == "Pembayaran di Tolak")
                                     <a href="#" class="btn btn-danger btn-batalkan" data-id="{{ $reservasi->id }}"><i class="bi bi-x-circle"></i>&nbsp;&nbsp;Cancel</a>                                    
                                 @endif
 

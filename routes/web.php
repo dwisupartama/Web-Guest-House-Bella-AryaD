@@ -51,6 +51,7 @@ Route::middleware('auth:web')->group(function(){
     Route::post('/user/process-booking', [DataBookingController::class, 'processBooking'])->name('landing.user.processBooking');
     Route::get('/user/booking-list', [DataBookingController::class, 'bookingList'])->name('landing.user.bookingList');
     Route::get('/user/booking-detail/{id}', [DataBookingController::class, 'bookingDetail'])->name('landing.user.bookingDetail');
+    Route::post('/user/booking-payment/{id}', [DataBookingController::class, 'bookingPayment'])->name('landing.user.bookingPayment');
     Route::get('/user/booking-cancel/{id}', [DataBookingController::class, 'batalkanBooking'])->name('landing.user.batalkanBooking');
 
     Route::get('/user/profile-setting', [DataProfileSettingController::class, 'profileSetting'])->name('landing.user.profileSetting');
@@ -103,6 +104,7 @@ Route::group([
         Route::get('data-reservasi/proses/{id}', [ReservasiController::class, 'proses'])->name('data-reservasi.proses');
         Route::get('data-reservasi/batal/{id}', [ReservasiController::class, 'batal'])->name('data-reservasi.batal');
         Route::get('data-reservasi/telah-dibayarkan/{id}', [ReservasiController::class, 'telahDibayarkan'])->name('data-reservasi.telahDibayarkan');
+        Route::get('data-reservasi/tolak-pembayaran/{id}', [ReservasiController::class, 'tolakPembayaran'])->name('data-reservasi.tolakPembayaran');
         Route::get('data-reservasi/batal-pembayaran/{id}', [ReservasiController::class, 'batalPembayaran'])->name('data-reservasi.batalPembayaran');
         Route::get('data-reservasi/checkin-all/{id}', [ReservasiController::class, 'checkInAll'])->name('data-reservasi.checkInAll');
         Route::get('data-reservasi/checkout-all/{id}', [ReservasiController::class, 'checkOutAll'])->name('data-reservasi.checkOutAll');
