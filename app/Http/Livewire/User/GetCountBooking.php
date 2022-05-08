@@ -14,6 +14,8 @@ class GetCountBooking extends Component
         $this->jumlah_booking = Reservasi::where('id_user', auth()->user()->id)
         ->where(function ($query){
              $query->where('status_reservasi', 'Menunggu Pembayaran')
+                ->orWhere('status_reservasi', 'Menunggu Konfirmasi')
+                ->orWhere('status_reservasi', 'Pembayaran di Tolak')
                 ->orWhere('status_reservasi', 'Siap di Check-in')
                 ->orWhere('status_reservasi', 'Sudah Check-in');
         })->count();
