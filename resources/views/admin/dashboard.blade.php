@@ -8,7 +8,7 @@
         <div class="card bg-primary text-white mb-4">
             <div class="card-body">
                 <small>Reservasi Bertambah Hari Ini</small>
-                <div class="fs-2 fw-bolder">
+                <div class="fs-4 fw-bolder">
                     {{ $data_reservasi_bertambah_hari_ini->count() }}
                 </div>
             </div>
@@ -18,7 +18,7 @@
         <div class="card bg-secondary text-white mb-4">
             <div class="card-body">
                 <small>Reservasi Check-in Hari Ini</small>
-                <div class="fs-2 fw-bolder">
+                <div class="fs-4 fw-bolder">
                     {{ $data_reservasi_check_in_hari_ini->count() }}
                 </div>
             </div>
@@ -28,7 +28,7 @@
         <div class="card bg-success text-white mb-4">
             <div class="card-body">
                 <small>Reservasi Bulan Ini</small>
-                <div class="fs-2 fw-bolder">
+                <div class="fs-4 fw-bolder">
                     {{ $data_reservasi_bulan_ini->count() }}
                 </div>
             </div>
@@ -38,7 +38,7 @@
         <div class="card bg-danger text-white mb-4">
             <div class="card-body">
                 <small>Penghasilan Bulan Ini</small>
-                <div class="fs-2 fw-bolder">
+                <div class="fs-4 fw-bolder">
                     Rp . {{ number_format($data_penghasilan_bulan_ini,0,',','.') }}
                 </div>
             </div>

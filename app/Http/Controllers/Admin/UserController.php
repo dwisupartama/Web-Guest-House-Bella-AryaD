@@ -56,7 +56,7 @@ class UserController extends Controller
             ]);
 
             if($tambah_user){
-                return redirect()->route('admin.data-user.index')->with('success', 'Data user berhasil ditambahkan.');
+                return redirect()->route('admin.data-customer.index')->with('success', 'Data user berhasil ditambahkan.');
             }
         }
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
 
             $data_user->save();
             
-            return redirect()->route('admin.data-user.index')->with('success', 'Data user berhasil diperbaharui.');
+            return redirect()->route('admin.data-customer.index')->with('success', 'Data user berhasil diperbaharui.');
         }
     }
 
@@ -125,7 +125,7 @@ class UserController extends Controller
         $delete_data_user = User::find($id)->delete();
 
         if($delete_data_user){
-            return redirect()->route('admin.data-user.index')->with('success', 'Data berhasil dihapus.');
+            return redirect()->route('admin.data-customer.index')->with('success', 'Data berhasil dihapus.');
         }
     }
 }
