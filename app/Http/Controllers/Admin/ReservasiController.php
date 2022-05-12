@@ -201,7 +201,7 @@ class ReservasiController extends Controller
                             'jumlah_anak' => $cart->jumlah_anak,
                             'harga_kamar' => $cart->kamar->harga_kamar,
                             'total_harga_kamar' => $cart->kamar->harga_kamar * $request->duration,
-                            'status_reservasi_kamar' => "Menunggu Pembayaran",
+                            'status_reservasi_kamar' => "Belum Siap di Check-in",
                         ]);
     
                         if($tambah_detail_reservasi){
