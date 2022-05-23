@@ -29,6 +29,17 @@
     });
     </script>
     @endif
+
+    @if (\Session::has('error'))
+    <script type="text/javascript">
+    Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        html: "{!! Session::get('error') !!}",
+        confirmButtonColor: '#3085d6',
+    });
+    </script>
+@endif
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>

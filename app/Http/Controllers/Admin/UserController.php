@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Reservasi;
 
 class UserController extends Controller
 {
@@ -122,10 +123,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $delete_data_user = User::find($id)->delete();
+        $check_reservasi = Reservasi::where('id_user', $id)->count();
 
-        if($delete_data_user){
-            return redirect()->route('admin.data-customer.index')->with('success', 'Data berhasil dihapus.');
+        if($check_reservasi > 0){
+            return redirect()->route('admin.data-customer.index')->with('error', 'Data user tidak dapat dihapus karena sudah pernah melakukan reservasi.');
+        } else {
+            $delete_data_user = User::find($id)->delete();
+    
+            if($delete_data_user){
+                return redirect()->route('admin.data-customer.index')->with('success', 'Data berhasil dihapus.');
+            }
         }
     }
 }
