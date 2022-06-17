@@ -19,7 +19,39 @@
     <link href="/asset-landing/css/styles.css" rel="stylesheet" />
     <!-- Custom Style CSS -->
     <link href="/asset-landing/css/custom.css" rel="stylesheet" />
+    <!-- JQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     @livewireStyles
+
+    @if(Auth::guard('web')->check())
+        <script>
+            $(document).ready(function() {
+                const DATE_IN_KEY = "date_check_in";
+                const DATE_OUT_KEY = "date_check_out";
+                const DURATION_KEY = "duration";
+
+                if(typeof(Storage) !== "undefined"){
+                    if(localStorage.getItem(DATE_IN_KEY) === null || localStorage.getItem(DATE_OUT_KEY) === null || localStorage.getItem(DURATION_KEY) === null){
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{ route('landing.booking.checkcart') }}",
+                            success: function(data){
+                                if(parseInt(data) > 0){
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "{{ route('landing.booking.deleteallcart') }}",
+                                        success: function(result){
+                                            console.log(result);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+    @endif
 </head>
 <style type="text/css">
     .map-container {
@@ -148,8 +180,6 @@
             </div>
         </div>
     </footer>
-    <!-- JQuery-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

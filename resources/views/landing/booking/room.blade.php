@@ -26,8 +26,6 @@ Swal.fire({
                     <h2 class="fw-bolder mb-2">
                         {{ $kamar->tipeKamar->tipe_kamar }} Room <span class="fs-3 fw-normal">No. {{ $kamar->no_kamar }}</span>
                     </h2>
-                    <!-- Post meta content-->
-                    {{-- <div class="text-muted fst-italic mb-2">Posted on January 1, 2022 by Start Bootstrap</div> --}}
                     <!-- Post categories-->
                     <h4 class="card-title pricing-card-title mb-2">Rp. {{ number_format($kamar->harga_kamar, 0,',','.') }}<small class="text-muted fw-light">/night</small></h4>
                 </header>
@@ -95,68 +93,9 @@ Swal.fire({
                 </div>
             </div>
 
-            <div class="card mb-4">
-                <div class="card-header">Search Room</div>
-                <div class="card-body">
-                    <form action="{{ route('landing.booking.withData') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="" class="form-label">Check-in</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                @php
-                                    date_default_timezone_set("Asia/Kuala_Lumpur");
-                                    $date_now = date('Y-m-d');
-                                    $date_min_check_in = date("Y-m-d", strtotime("+1 day"));
-                                    $date_checkout_start = date("Y-m-d", strtotime("+2 day"));
-                                @endphp
-                                <input type="date" class="form-control" required name="check_in_date" min="<?= $date_min_check_in ?>" value="@if(isset($request)){{$request->check_in_date}}@else{{$date_min_check_in}}@endif" id="check-in-date">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Duration</label>
-                            <select class="form-select" id="duration-select" required name="duration">
-                                @for ($i = 1; $i <= 30; $i++)
-                                    <option value="{{ $i }}"
-                                        @if(isset($request))
-                                            @if ($i == $request->duration)
-                                                selected
-                                            @endif
-                                        @else
-                                            @if ($i == 1)
-                                                selected
-                                            @endif
-                                        @endif
-                                    >{{ $i }} Night</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Check-out</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                <input type="date" class="form-control" required name="check_out_date" value="@if(isset($request)){{$request->check_out_date}}@else{{ $date_checkout_start }}@endif" readonly id="check-out-date">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Room Type</label>
-                            <select class="form-select" id="" name="room_type" required>
-                                <option value="">Choose Type</option>
-                                @foreach($data_tipe_kamar as $tipe_kamar)
-                                    <option value="{{ $tipe_kamar->id }}"
-                                        @if(isset($request))
-                                            @if($tipe_kamar->id == $request->room_type)
-                                                selected
-                                            @endif
-                                        @endif
-                                    >{{ $tipe_kamar->tipe_kamar }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-search"></i>&nbsp;&nbsp;Search
-                        </button>
-                    </form>
+            <div class="col-lg-12">
+                <div class="d-grid">
+                    <a href="{{ route('landing.booking') }}" class="btn btn-success">Find Another Room</a>
                 </div>
             </div>
         </div>

@@ -127,8 +127,7 @@ class DataBookingController extends Controller
                             $jenis_bank = $json_rekening['rekening'][0]['jenis_bank'];
                             $no_rekening = $json_rekening['rekening'][0]['no_rekening'];
                             $atas_nama = $json_rekening['rekening'][0]['atas_nama'];
-                            return redirect()->route('landing.user.bookingList')->with('success', 'Room successfully booked, please make payment before <br><b>'.$tgl_pembayaran_terakhir.'</b><br> to <b>'.$no_rekening.'('.$jenis_bank.')</b> on behalf of <b>'.$atas_nama.'</b>');
-                            // return redirect()->route('landing.user.bookingList')->with('success', 'Room successfully booked, please make payment before '.$tgl_pembayaran_terakhir);
+                            return redirect()->route('landing.user.bookingList')->with('successbook', 'Room successfully booked, please make payment before <br><b>'.$tgl_pembayaran_terakhir.'</b><br> to <b>'.$no_rekening.'('.$jenis_bank.')</b> on behalf of <b>'.$atas_nama.'</b>');
                         }
                     }
                 }

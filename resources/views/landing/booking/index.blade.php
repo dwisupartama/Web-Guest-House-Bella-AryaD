@@ -6,124 +6,62 @@
     <!-- Page content-->
     <section class="pt-5">
         <div class="container px-5">
-            <form action="{{ route('landing.booking.withData') }}" method="POST">
-                @csrf
-                <div class="bg-light rounded-3 py-4 px-4 px-md-5 mb-5">
-                    <div class="row g-3 align-items-center">
-                        <div class="col-lg-3">
-                            <div>
-                                <label for="" class="form-label">Check-in</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                    @php
-                                        date_default_timezone_set("Asia/Kuala_Lumpur");
-                                        $date_now = date('Y-m-d');
-                                        $date_min_check_in = date("Y-m-d", strtotime("+1 day"));
-                                        $date_checkout_start = date("Y-m-d", strtotime("+2 day"));
-                                    @endphp
-                                    <input type="date" class="form-control" required name="check_in_date" min="<?= $date_min_check_in ?>" value="@if(isset($request)){{$request->check_in_date}}@else{{$date_min_check_in}}@endif" id="check-in-date">
-                                </div>
+            <div class="bg-light rounded-3 py-4 px-4 px-md-5 mb-5">
+                <div class="row g-3 align-items-center">
+                    <div class="col-lg-3">
+                        <div>
+                            <label for="" class="form-label">Check-in</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                @php
+                                    date_default_timezone_set("Asia/Kuala_Lumpur");
+                                    $date_now = date('Y-m-d');
+                                    $date_min_check_in = date("Y-m-d", strtotime("+1 day"));
+                                    $date_checkout_start = date("Y-m-d", strtotime("+2 day"));
+                                @endphp
+                                <input type="date" class="form-control" required name="check_in_date" min="{{$date_min_check_in}}" value="{{$date_min_check_in}}" id="check-in-date">
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label for="" class="form-label">Duration</label>
-                                <select class="form-select" id="duration-select" required name="duration">
-                                    @for ($i = 1; $i <= 30; $i++)
-                                        <option value="{{ $i }}"
-                                            @if(isset($request))
-                                                @if ($i == $request->duration)
-                                                    selected
-                                                @endif
-                                            @else
-                                                @if ($i == 1)
-                                                    selected
-                                                @endif
-                                            @endif
-                                        >{{ $i }} Night</option>
-                                    @endfor
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div>
-                                <label for="" class="form-label">Check-out</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                    <input type="date" class="form-control" required name="check_out_date" value="@if(isset($request)){{$request->check_out_date}}@else{{ $date_checkout_start }}@endif" readonly id="check-out-date">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <label for="" class="form-label">Room Type</label>
-                                <select class="form-select" id="" name="room_type" required>
-                                    <option value="">Choose Type</option>
-                                    @foreach($data_tipe_kamar as $tipe_kamar)
-                                        <option value="{{ $tipe_kamar->id }}"
-                                            @if(isset($request))
-                                                @if($tipe_kamar->id == $request->room_type)
-                                                    selected
-                                                @endif
-                                            @endif
-                                        >{{ $tipe_kamar->tipe_kamar }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="d-grid">
-                                <input type="submit" class="btn btn-primary" value="Search" style="margin-top: 30px;">
-                            </div>
-                        </div>
-                        <p class="fw-light">* In 1 transaction, only 1 room reservation can be made on the same date </p>
                     </div>
+                    <div class="col-lg-3">
+                        <div>
+                            <label for="" class="form-label">Check-out</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                <input type="date" class="form-control" required name="check_out_date" min="{{$date_checkout_start}}" value="{{$date_checkout_start}}" id="check-out-date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div>
+                            <label for="" class="form-label">Duration</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="duration-select" required name="duration" value="1" readonly>
+                                <span class="input-group-text" id="basic-addon2">Night</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="d-grid">
+                            {{-- <input type="submit" class="btn btn-primary" value="Search" id="search-room" style="margin-top: 30px;"> --}}
+                            <button class="btn btn-primary" type="button" id="search-room" style="margin-top: 30px;">Search</button>
+                            <button class="btn btn-danger" type="button" id="reset-date" style="margin-top: 30px; display: none;">Reset</button>
+                        </div>
+                    </div>
+                    <p class="fw-light">* In 1 transaction, only 1 room reservation can be made on the same date </p>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
     <!-- Blog preview section-->
     <section>
         <div class="container px-5">
-            <div class="row gx-5">
-                @isset($data_kamar)
-                    @forelse($data_kamar as $kamar)
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="{{ asset('storage/img/img-kamar/'.$kamar->gambar_kamar) }}" alt="..." />
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ $kamar->tipeKamar->tipe_kamar }}</div>
-                                    <a class="text-decoration-none link-dark" href="#!">
-                                        <h5 class="card-title mb-3">
-                                            {{ $kamar->tipeKamar->tipe_kamar }} <span class="fs-6 fw-normal">No. {{ $kamar->no_kamar }}</span>
-                                        </h5>
-                                    </a>
-                                    <p class="card-text mb-0">
-                                        {{ $kamar->deskripsi_singkat }}
-                                    </p>
-                                    <h5 class="card-title pricing-card-title mt-2">Rp. {{ number_format($kamar->harga_kamar, 0,',','.') }}<small class="text-muted fw-light">/night</small></h5>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <a href="{{ route('landing.booking.room', [$kamar->id]) }}" class="btn btn-primary">Booking Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-lg-12">
-                            <div class="alert alert-primary text-center" role="alert">
-                                There are no rooms of that type available on that date 
-                            </div>
-                        </div>
-                    @endforelse
-                @else
-                    <div class="col-lg-12">
-                        <div class="alert alert-light text-center" role="alert">
-                            Choose the date when you want to book a room
-                        </div>
+            <div class="row gx-5" id="result-room">
+                <div class="col-lg-12">
+                    <div class="alert alert-light text-center" role="alert">
+                        Choose the date when you want to book a room
                     </div>
-                @endisset
+                </div>
             </div>
         </div>
     </section>
@@ -132,29 +70,96 @@
 @section('script')
 <script type="text/javascript">
     $(function(){
-        $("#check-in-date, #duration-select").change(function(){
+        const DATE_IN_SAVEKEY = "date_check_in";
+        const DATE_OUT_SAVEKEY = "date_check_out";
+        const DURATION_SAVEKEY = "duration";
+
+        if (typeof(Storage) !== "undefined") {
+            if(localStorage.getItem(DATE_IN_SAVEKEY) !== null || localStorage.getItem(DATE_OUT_SAVEKEY) !== null || localStorage.getItem(DURATION_SAVEKEY) !== null){
+                $("#check-in-date").val(localStorage.getItem(DATE_IN_SAVEKEY));
+                $("#check-in-date").attr("readonly", true);
+                $("#check-out-date").val(localStorage.getItem(DATE_OUT_SAVEKEY));
+                $("#check-out-date").attr("readonly", true);
+                $("#duration-select").val(localStorage.getItem(DURATION_SAVEKEY));
+                $("#search-room").hide();
+                $("#reset-date").show();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('landing.booking.searchroom') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        check_in_date: localStorage.getItem(DATE_IN_SAVEKEY),
+                        check_out_date: localStorage.getItem(DATE_OUT_SAVEKEY),
+                        duration: localStorage.getItem(DURATION_SAVEKEY)
+                    },
+                    beforeSend: function(){
+                        $('#result-room').html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                    },
+                    success: function(data){
+                        $('#result-room').html(data);
+                    }
+                });
+            }
+        }
+
+        $("#check-in-date, #check-out-date").change(function(){
             var date_check_in = new Date($('#check-in-date').val());
-            var duration = $('#duration-select').find('option:selected').val();
+            var date_check_out = new Date($('#check-out-date').val());
 
-            var check_out_estimination = new Date(date_check_in);
-            check_out_estimination.setDate(date_check_in.getDate()+parseInt(duration));
+            var diff_in_time = date_check_out.getTime() - date_check_in.getTime();
+
+            if($(this).attr('id') == "check-in-date"){
+                var min_check_out = new Date(date_check_in);
+                min_check_out.setDate(date_check_in.getDate()+1);
+
+                var estimination_day = min_check_out.getDate();
+                estimination_day = ""+estimination_day;
+                var estimination_month = min_check_out.getMonth() + 1;
+                estimination_month = ""+estimination_month;
+                var estimination_year = min_check_out.getFullYear();
+                if(estimination_day.length <= 1){
+                    estimination_day = "0"+estimination_day;
+                }
+                if(estimination_month.length <= 1){
+                    estimination_month = "0"+estimination_month;
+                }
+                var check_out_date = estimination_year+"-"+estimination_month+"-"+estimination_day;
+
+                $("#check-out-date").attr("min", check_out_date);
+                if(date_check_out <= date_check_in){
+                    $("#check-out-date").attr("value", check_out_date);
+                    diff_in_time = min_check_out.getTime() - date_check_in.getTime();
+                }
+            }
             
-            var estimination_day = check_out_estimination.getDate();
-            estimination_day = ""+estimination_day;
-            var estimination_month = check_out_estimination.getMonth() + 1;
-            estimination_month = ""+estimination_month;
-            var estimination_year = check_out_estimination.getFullYear();
+            var diff_in_days = diff_in_time / (1000 * 3600 * 24);
 
-            if(estimination_day.length <= 1){
-                estimination_day = "0"+estimination_day;
+            $("#duration-select").attr("value",diff_in_days);
+        });
+
+        $("#search-room").click(function(e){
+            var date_check_in = $('#check-in-date').val();
+            var date_check_out = $('#check-out-date').val();
+            var duration = $("#duration-select").val();
+
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem(DATE_IN_SAVEKEY, date_check_in);
+                localStorage.setItem(DATE_OUT_SAVEKEY, date_check_out);
+                localStorage.setItem(DURATION_SAVEKEY, duration);
+
+                location.reload();
             }
+        });
 
-            if(estimination_month.length <= 1){
-                estimination_month = "0"+estimination_month;
+        $("#reset-date").click(function(e){
+            if (typeof(Storage) !== "undefined") {
+                localStorage.removeItem(DATE_IN_SAVEKEY);
+                localStorage.removeItem(DATE_OUT_SAVEKEY);
+                localStorage.removeItem(DURATION_SAVEKEY);
+
+                location.reload();
             }
-
-            var check_out_date = estimination_year+"-"+estimination_month+"-"+estimination_day;
-            $("#check-out-date").attr("value",check_out_date);
         });
     });
 </script>

@@ -20,9 +20,28 @@ class BookingController extends Controller
         return view('landing.booking.index', ['data_tipe_kamar' => $data_tipe_kamar]);
     }
 
-    public function indexWithData(Request $request){
+    public function detailKamarBooking($id){
+        $kamar = Kamar::find($id);
         $data_tipe_kamar = TipeKamar::latest()->get();
+        return view('landing.booking.room', ['kamar' => $kamar, 'data_tipe_kamar' => $data_tipe_kamar]);
+    }
 
+    public function cekCartBooking(){
+        $id_user = auth()->guard('web')->user()->id;
+        $count_cart = Cart::where('id_user', $id_user)->count();
+        return $count_cart;
+    }
+
+    public function deleteAllCart(){
+        $delete_cart_user = Cart::where('id_user', auth()->guard('web')->user()->id)->delete();
+        if($delete_cart_user){
+            return "Success";
+        } else {
+            return "Error";
+        }
+    }
+
+    public function searchRoom(Request $request){
         $data_kamar_dipesan = DetailReservasi::select('tb_kamar.id')
             ->join('tb_reservasi','tb_detail_reservasi.id_reservasi','=','tb_reservasi.id')
             ->join('tb_kamar','tb_detail_reservasi.id_kamar','=','tb_kamar.id')
@@ -33,11 +52,10 @@ class BookingController extends Controller
                 ->orWhereRaw('? >= tb_reservasi.tgl_book_check_in AND ? <= tb_reservasi.tgl_book_check_out', [$request->check_in_date, $request->check_in_date])
                 ->orWhereRaw('? >= tb_reservasi.tgl_book_check_in AND ? <= tb_reservasi.tgl_book_check_out', [$request->check_out_date, $request->check_out_date]);
             })
-            ->where('tb_tipe_kamar.id', $request->room_type)
             ->groupBy('tb_kamar.id')
             ->get();
 
-        $data_kamar = Kamar::where('id_tipe_kamar', $request->room_type)->latest()->get();
+        $data_kamar = Kamar::latest()->get();
         $index = 0;
 
         foreach($data_kamar as $kamar){
@@ -49,13 +67,6 @@ class BookingController extends Controller
             $index++;
         }
 
-        return view('landing.booking.index', ['data_tipe_kamar' => $data_tipe_kamar, 'data_kamar' => $data_kamar, 'request' => $request]);
-        // return $data_kamar;
-    }
-
-    public function detailKamarBooking($id){
-        $kamar = Kamar::find($id);
-        $data_tipe_kamar = TipeKamar::latest()->get();
-        return view('landing.booking.room', ['kamar' => $kamar, 'data_tipe_kamar' => $data_tipe_kamar]);
+        return view('landing.booking.search', ['data_kamar' => $data_kamar]);
     }
 }

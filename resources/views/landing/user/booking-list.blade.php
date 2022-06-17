@@ -14,6 +14,26 @@
     </script>
 @endif
 
+@if (\Session::has('successbook'))
+    <script type="text/javascript">
+    const DATE_IN_SAVEKEY = "date_check_in";
+    const DATE_OUT_SAVEKEY = "date_check_out";
+    const DURATION_SAVEKEY = "duration";
+    if (typeof(Storage) !== "undefined") {
+        localStorage.removeItem(DATE_IN_SAVEKEY);
+        localStorage.removeItem(DATE_OUT_SAVEKEY);
+        localStorage.removeItem(DURATION_SAVEKEY);
+    }
+
+    Swal.fire({
+        icon: "success",
+        title: "Successful",
+        html: "{!! \Session::get('success') !!}",
+        confirmButtonColor: '#3085d6',
+    });
+    </script>
+@endif
+
 <!-- Modal -->
 <div class="modal fade" id="modal-booking-details" tabindex="-1" aria-labelledby="model-booking-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">

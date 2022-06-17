@@ -99,40 +99,30 @@
                                             $date_min_check_in = date("Y-m-d", strtotime("+1 day"));
                                             $date_checkout_start = date("Y-m-d", strtotime("+2 day"));
                                         @endphp
-                                        <input type="date" class="form-control" required name="check_in_date" min="<?= $date_min_check_in ?>" value="@if(isset($request)){{$request->check_in_date}}@else{{$date_min_check_in}}@endif" id="check-in-date">
+                                        <input type="date" class="form-control" required name="check_in_date" min="{{$date_min_check_in}}" value="{{$date_min_check_in}}" id="check-in-date" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div>
-                                    <label for="" class="form-label">Duration</label>
-                                    <select class="form-select" id="duration-select" required name="duration">
-                                        @for ($i = 1; $i <= 30; $i++)
-                                            <option value="{{ $i }}"
-                                                @if(isset($request))
-                                                    @if ($i == $request->duration)
-                                                        selected
-                                                    @endif
-                                                @else
-                                                    @if ($i == 1)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            >{{ $i }} Night</option>
-                                        @endfor
-                                    </select>
+                                    <label for="" class="form-label">Check-out</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                        <input type="date" class="form-control" required name="check_out_date" min="{{$date_checkout_start}}" value="{{$date_checkout_start}}" readonly id="check-out-date">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mt-2">
                             <div>
-                                <label for="" class="form-label">Check-out</label>
+                                <label for="" class="form-label">Duration</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                                    <input type="date" class="form-control" required name="check_out_date" value="@if(isset($request)){{$request->check_out_date}}@else{{ $date_checkout_start }}@endif" readonly id="check-out-date">
+                                    <input type="text" class="form-control" id="duration-select" required name="duration" value="1" readonly>
+                                    <span class="input-group-text" id="basic-addon2">Night</span>
                                 </div>
                             </div>
                         </div>
+
                         <p class="fw-light mt-3">* In 1 transaction, only 1 room reservation can be made on the same date </p>
                         <hr class="dropdown-divider" />
                         <div class="alert alert-primary" role="alert">
@@ -222,30 +212,17 @@
 @section('script')
 <script type="text/javascript">
     $(function(){
-        $("#check-in-date, #duration-select").change(function(){
-            var date_check_in = new Date($('#check-in-date').val());
-            var duration = $('#duration-select').find('option:selected').val();
+        const DATE_IN_SAVEKEY = "date_check_in";
+        const DATE_OUT_SAVEKEY = "date_check_out";
+        const DURATION_SAVEKEY = "duration";
 
-            var check_out_estimination = new Date(date_check_in);
-            check_out_estimination.setDate(date_check_in.getDate()+parseInt(duration));
-
-            var estimination_day = check_out_estimination.getDate();
-            estimination_day = ""+estimination_day;
-            var estimination_month = check_out_estimination.getMonth() + 1;
-            estimination_month = ""+estimination_month;
-            var estimination_year = check_out_estimination.getFullYear();
-
-            if(estimination_day.length <= 1){
-                estimination_day = "0"+estimination_day;
+        if (typeof(Storage) !== "undefined") {
+            if(localStorage.getItem(DATE_IN_SAVEKEY) !== null || localStorage.getItem(DATE_OUT_SAVEKEY) !== null || localStorage.getItem(DURATION_SAVEKEY) !== null){
+                $("#check-in-date").val(localStorage.getItem(DATE_IN_SAVEKEY));
+                $("#check-out-date").val(localStorage.getItem(DATE_OUT_SAVEKEY));
+                $("#duration-select").val(localStorage.getItem(DURATION_SAVEKEY));
             }
-
-            if(estimination_month.length <= 1){
-                estimination_month = "0"+estimination_month;
-            }
-
-            var check_out_date = estimination_year+"-"+estimination_month+"-"+estimination_day;
-            $("#check-out-date").attr("value",check_out_date);
-        });
+        }
 
         $(".btn-delete-data").click(function(e){
             e.preventDefault();
@@ -287,22 +264,6 @@
             return("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
         };
 
-        $('#duration-select').change(function(){
-            var duration = $(this).val();
-            var total_pembayaran = 0;
-            <?php
-                foreach($data_cart as $cart){
-            ?>
-            var harga{{ $cart->id }} = $('#harga-kamar-cart{{ $cart->id }}').val();
-            var total_harga{{ $cart->id }} = harga{{ $cart->id }} * duration;
-            $('#total-kamar-cart{{ $cart->id }}').val(total_harga{{ $cart->id }});
-            $('#text-total-harga-kamar{{ $cart->id }}').text("Rp. "+format(total_harga{{ $cart->id }}));
-            total_pembayaran += total_harga{{ $cart->id }};
-            <?php
-                }
-            ?>
-            $('#text-total-pembayaran').text("Rp. "+format(total_pembayaran));
-        });
 
         $('#process-booking-now').click(function(){
             $('#form-booking').submit();

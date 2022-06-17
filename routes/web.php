@@ -40,8 +40,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', [HomeLandingController::class, 'homePage'])->name('landing.home');
 
 Route::get('/booking', [BookingController::class, 'index'])->name('landing.booking');
-Route::post('/booking', [BookingController::class, 'indexWithData'])->name('landing.booking.withData');
+Route::post('/search-room', [BookingController::class, 'searchRoom'])->name('landing.booking.searchroom');
 Route::get('/booking/room/{id}', [BookingController::class, 'detailKamarBooking'])->name('landing.booking.room');
+Route::get('/check-cart', [BookingController::class, 'cekCartBooking'])->name('landing.booking.checkcart');
+Route::get('/delete-all-cart', [BookingController::class, 'deleteAllCart'])->name('landing.booking.deleteallcart');
 
 Route::middleware('auth:web')->group(function(){
     Route::post('/user/add-to-cart', [DataCartController::class, 'addToCart'])->name('landing.booking.addToCart');
