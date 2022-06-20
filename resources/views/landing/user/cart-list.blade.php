@@ -56,12 +56,10 @@
                                 </div>
                             </td>
                             <td class="align-middle text-end">
-                                <input type="hidden" id="harga-kamar-cart{{ $cart->id }}" value="{{ $cart->kamar->harga_kamar }}">
                                 Rp. {{  number_format($cart->kamar->harga_kamar,0,',','.') }}
                             </td>
                             <td class="align-middle text-end" id="text-total-harga-kamar{{ $cart->id }}">
-                                <input type="hidden" id="total-kamar-cart{{ $cart->id }}" value="{{ $cart->kamar->harga_kamar }}">
-                                Rp. {{  number_format($cart->kamar->harga_kamar,0,',','.') }}
+                                Rp. 0
                             </td>
                             <td class="align-middle text-center">
                                 <a href="#" class="btn btn-outline-danger btn-sm btn-delete-data" data-id="{{ $cart->id }}">
@@ -85,7 +83,7 @@
             <div class="card mb-4">
                 <div class="card-header">Booking Information Requirement</div>
                 <div class="card-body">
-                    <form action="{{ route('landing.user.processBooking') }}" method="POST" id="form-booking"> {{-- Form Action --}}
+                    <form action="{{ route('landing.user.processBooking') }}" method="POST" id="form-booking">
                         @csrf
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
@@ -186,14 +184,7 @@
                                 Total Payment
                             </div>
                             <div class="fs-4 fw-bolder text-success" id="text-total-pembayaran">
-                                @php
-                                    $total_pembayaran = 0;
-
-                                    foreach($data_cart as $cart){
-                                        $total_pembayaran += $cart->kamar->harga_kamar;
-                                    }
-                                @endphp
-                                Rp. {{  number_format($total_pembayaran,0,',','.') }}
+                                Rp. 0
                             </div>
                         </div>
                         <div class="col-md-6 text-end">
@@ -268,6 +259,17 @@
         $('#process-booking-now').click(function(){
             $('#form-booking').submit();
         });
+
+        let total_pembayaran = 0;
+
+        @foreach ($data_cart as $cart)
+            let harga_kamar_{{$cart->id}} = {{ $cart->kamar->harga_kamar }};
+            let total_harga_kamar_{{$cart->id}} = harga_kamar_{{$cart->id}} * $('#duration-select').val();
+            $('#text-total-harga-kamar{{ $cart->id }}').text("Rp. "+format(total_harga_kamar_{{$cart->id}}));
+            total_pembayaran += total_harga_kamar_{{$cart->id}};
+        @endforeach
+
+        $('#text-total-pembayaran').text("Rp. "+format(total_pembayaran));
     });
 </script>
 @endsection
